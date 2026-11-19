@@ -509,22 +509,96 @@ header .hr .ib{width:40px;height:40px}
 @media(max-width:480px){.account-box{max-height:92vh;overflow:auto}}
 </style>
 
-<style id="admin-dashboard-theme">
+<style id="responsive-dual-dashboard">
+/* Admin dashboard: desktop + mobile */
 #adm.sheet.open{display:flex!important;align-items:stretch!important;justify-content:stretch!important;background:#f3f5f8!important;z-index:30}
-#adm .box.adm{width:100%!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#f3f5f8!important;color:#202633!important;display:block!important;overflow:hidden!important;animation:none}
-#adm .box.adm>h2{display:none!important}#adm .box.adm>.x{position:fixed!important;left:12px!important;top:12px!important;width:34px;height:34px;background:#eef1f5!important;color:#394150!important;z-index:40}
-#admc{height:100%;width:100%;overflow:hidden!important;display:block!important;background:#f3f5f8!important;color:#202633!important;font-family:Cairo,Tahoma,sans-serif}
-.admin-layout{height:100%;display:grid;grid-template-columns:225px minmax(0,1fr);direction:rtl}.admin-side{background:linear-gradient(180deg,#20242d,#171b23);color:#f5f6f8;padding:20px 13px;display:flex;flex-direction:column;min-height:0}
-.admin-brand{display:flex;align-items:center;gap:10px;padding:4px 8px 22px;border-bottom:1px solid #ffffff18}.admin-brand-icon{width:40px;height:40px;border-radius:12px;background:#ed861d;display:grid;place-items:center;font-size:21px}.admin-brand b{display:block;font-size:20px}.admin-brand small{color:#aeb5c1;font-size:10px}.admin-side-caption{font-size:11px;color:#8e98a8;margin:20px 10px 10px}
-#adm .admin-side .at{position:static!important;display:flex;flex-direction:column;gap:6px;padding:0!important;border:0!important;background:transparent!important;overflow:visible}#adm .admin-side .at button{width:100%;min-height:42px;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:11px;padding:9px 12px;border:0;border-radius:9px;background:transparent;color:#c5cad3;font-size:12px;text-align:right}#adm .admin-side .at button span{font-size:17px;width:22px}#adm .admin-side .at button.on{background:#ed861d;color:#fff}.admin-side-foot{margin-top:auto;padding:13px 8px 3px;border-top:1px solid #ffffff18;color:#b4bdc9;font-size:11px}.admin-online{display:inline-block;width:7px;height:7px;border-radius:50%;background:#31c77a;margin-left:7px}
-.admin-workspace{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:#f4f6f9}.admin-topbar{height:66px;flex:none;background:#fff;border-bottom:1px solid #e7eaf0;display:flex;align-items:center;justify-content:space-between;padding:8px 24px}.admin-topbar small{font-size:10px;color:#8b93a1}.admin-topbar h2{font-size:16px;margin:2px 0;color:#222936}.admin-top-actions{display:flex;align-items:center;gap:9px;font-size:11px}.admin-top-actions b,.admin-top-actions small{display:block}.admin-top-actions small{color:#8992a0}.admin-user-avatar{width:35px;height:35px;border-radius:50%;background:#eef1f5;display:grid;place-items:center;font-size:18px}.admin-refresh{width:34px;height:34px;border:1px solid #e5e8ee;border-radius:9px;background:#fff;color:#505a69;font-size:21px}
-.admin-content{overflow:auto;min-height:0;padding:21px 24px 34px;display:flex;flex-direction:column;gap:15px}.admin-page-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.admin-page-head h1{font-size:20px;margin:0;color:#222936}.admin-page-head p{font-size:11px;color:#8b93a1;margin:3px 0 0}.admin-date{font-size:10px;color:#737d8d;background:#fff;border:1px solid #e7eaf0;padding:7px 11px;border-radius:8px}.admin-alert{border:1px solid #f2d29b;background:#fff8e9;color:#9b6515;padding:10px 13px;border-radius:9px;text-align:right;font:700 12px Cairo}
-.dash-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.dash-stat{background:#fff;border:1px solid #e8ebf0;border-radius:11px;padding:14px;display:flex;align-items:center;gap:11px;min-width:0;box-shadow:0 2px 7px #25324a08}.dash-stat-ico{width:39px;height:39px;flex:none;border-radius:10px;background:#fff1e3;display:grid;place-items:center;font-size:18px}.dash-stat:nth-child(2) .dash-stat-ico{background:#e7f6ee}.dash-stat:nth-child(3) .dash-stat-ico{background:#eaf1ff}.dash-stat:nth-child(4) .dash-stat-ico{background:#f1eaff}.dash-stat small,.dash-stat b,.dash-stat em{display:block}.dash-stat small{font-size:10px;color:#8992a0}.dash-stat b{font-size:17px;color:#252c39;line-height:1.7}.dash-stat em{font-style:normal;font-size:9px;color:#21a46b}
-.dash-panels{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,1fr);gap:11px}.dash-panel{background:#fff;border:1px solid #e8ebf0;border-radius:11px;padding:14px;min-width:0;box-shadow:0 2px 7px #25324a08}.dash-panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.dash-panel-head h3{font-size:13px;color:#252c39;margin:0}.dash-panel-head small{font-size:9px;color:#929aa7}.dash-pill{font-size:9px;padding:5px 9px;border-radius:20px;background:#f2f4f7;color:#727c8b}.dash-bars{height:140px;display:flex;align-items:flex-end;justify-content:space-around;gap:9px;padding:8px 5px 0;border-bottom:1px solid #edf0f4}.dash-bar-col{height:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px}.dash-bar-col b{font-size:9px;color:#818b99}.dash-bar-col i{display:block;width:min(29px,75%);min-height:4px;background:linear-gradient(180deg,#f6ad55,#ed861d);border-radius:6px 6px 2px 2px}.dash-bar-col small{font-size:9px;color:#929aa7}.status-line{display:grid;grid-template-columns:75px minmax(35px,1fr) 22px;align-items:center;gap:7px;margin:11px 0;font-size:10px;color:#6f7887}.status-line>div{height:7px;background:#f0f2f5;border-radius:8px;overflow:hidden}.status-line>div i{height:100%;display:block;background:#ed922d;border-radius:8px}.status-line b{text-align:left;color:#333b49}
-.dash-link{border:0;background:transparent;color:#e4821a;font:700 10px Cairo}.latest-table{width:100%;overflow:auto}.latest-row{display:grid;grid-template-columns:1fr 1.4fr 1fr .9fr;align-items:center;gap:9px;padding:9px 3px;border-bottom:1px solid #f0f1f4;font-size:10px;color:#555f6e;min-width:340px}.latest-head{font-weight:800;color:#8a93a1;background:#fafbfc}.latest-row>b,.latest-row>span:nth-child(3){color:#303846;font-weight:700}
-#adm .admin-content .ac{background:#fff!important;border:1px solid #e8ebf0!important;border-radius:11px!important;color:#303846!important;box-shadow:0 2px 7px #25324a08}#adm .admin-content .ac h3{color:#303846!important}#adm .admin-content .mut,#adm .admin-content small{color:#87909e}#adm .admin-content input:not([type=checkbox]):not([type=file]),#adm .admin-content select,#adm .admin-content textarea{background:#fff!important;color:#303846!important;border:1px solid #dfe4eb!important}#adm .admin-content .ic{background:#fff!important;border-color:#e5e9ef!important;color:#303846}#adm .admin-content .cc button{background:#f5f6f8;color:#4b5564;border-color:#e5e9ef}#adm .admin-content .cc button.on{background:#ed861d;color:#fff;border-color:#ed861d}#adm .admin-content .btn,#adm .admin-content .btn.gold2{background:#ed861d;color:#fff}#adm .admin-content .btn.danger{background:#c83b42}#adm .admin-content .quick-actions{gap:8px}#adm .admin-content .quick-actions button{background:#29313e;border-radius:9px}
-@media(max-width:850px){.admin-layout{grid-template-columns:185px minmax(0,1fr)}.admin-content{padding:15px}.admin-topbar{padding:8px 15px}.dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.admin-layout{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}.admin-side{padding:7px 9px;display:block}.admin-brand,.admin-side-caption,.admin-side-foot{display:none}#adm .admin-side .at{flex-direction:row;overflow-x:auto;gap:5px}#adm .admin-side .at button{width:auto;min-width:max-content;min-height:37px;padding:7px 9px;font-size:10px;gap:5px}#adm .admin-side .at button span{font-size:14px;width:auto}.admin-topbar{height:56px;padding:6px 11px}.admin-topbar h2{font-size:13px}.admin-top-actions{padding-left:35px}.admin-content{padding:12px 9px 22px;gap:10px}.admin-page-head h1{font-size:17px}.admin-page-head p{font-size:9px}.admin-date{font-size:8px;padding:5px}.dash-stats{gap:7px}.dash-stat{padding:9px;gap:7px}.dash-stat-ico{width:30px;height:30px;font-size:14px}.dash-stat b{font-size:13px}.dash-stat small,.dash-stat em{font-size:8px}.dash-panels{grid-template-columns:1fr;gap:9px}.dash-bars{height:120px}.dash-panel{padding:11px}.latest-row{font-size:9px}}
+#adm .box.adm{width:100%!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#f3f5f8!important;color:#202633!important;overflow:hidden!important}
+#adm .box.adm>h2{display:none!important}
+#adm .box.adm>.x{position:fixed!important;left:12px!important;top:10px!important;z-index:60}
+#admc{height:100%;width:100%;overflow:hidden!important;background:#f3f5f8!important;color:#202633!important;font-family:Cairo,Tahoma,sans-serif}
+.admin-layout{height:100%;display:grid;grid-template-columns:230px minmax(0,1fr);direction:rtl}
+.admin-side{background:linear-gradient(180deg,#222630,#171b23);color:#fff;padding:22px 14px;display:flex;flex-direction:column;min-height:0}
+.admin-brand{display:flex;align-items:center;gap:10px;padding:4px 8px 24px;border-bottom:1px solid #ffffff20}
+.admin-brand-icon{width:42px;height:42px;border-radius:13px;background:#ed861d;display:grid;place-items:center;font-size:22px}
+.admin-brand b{display:block;font-size:20px}.admin-brand small{font-size:11px;color:#aeb6c2}
+.admin-side-caption{font-size:11px;color:#8f99a8;margin:22px 10px 10px}
+#adm .admin-side .at{position:static!important;display:flex;flex-direction:column;gap:6px;padding:0!important;border:0!important;background:transparent!important;overflow:visible}
+#adm .admin-side .at button{width:100%;min-height:43px;display:flex;align-items:center;justify-content:flex-start;gap:12px;padding:10px 12px;border:0;border-radius:10px;background:transparent;color:#c5cad3;font-size:12px;text-align:right}
+#adm .admin-side .at button span{font-size:17px;width:23px;text-align:center}
+#adm .admin-side .at button.on{background:#ed861d;color:#fff}
+.admin-side-foot{margin-top:auto;padding:14px 8px 4px;border-top:1px solid #ffffff20;color:#aeb6c2;font-size:11px}
+.admin-side-foot i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#30c879;margin-left:7px}
+.admin-main{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;background:#f4f6f9}
+.admin-topbar{height:68px;flex:none;background:#fff;border-bottom:1px solid #e7eaf0;display:flex;align-items:center;justify-content:space-between;padding:8px 26px}
+.admin-topbar>div:first-child small{font-size:10px;color:#8b93a1}.admin-topbar h2{font-size:16px;margin:2px 0 0;color:#222936}
+.admin-top-user{display:flex;align-items:center;gap:9px;font-size:11px}.admin-top-user>span{width:36px;height:36px;border-radius:50%;background:#eef1f5;display:grid;place-items:center;font-size:18px}.admin-top-user b,.admin-top-user small{display:block}.admin-top-user small{color:#8992a0}.admin-top-user button{width:34px;height:34px;border:1px solid #e5e8ee;border-radius:10px;background:#fff;color:#505a69;font-size:21px;cursor:pointer}
+.admin-content{overflow:auto;min-height:0;padding:22px 26px 36px;display:flex;flex-direction:column;gap:16px}
+.admin-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.admin-heading h1{font-size:20px;margin:0;color:#222936}.admin-heading p{font-size:11px;color:#8b93a1;margin:3px 0 0}.admin-heading>span{font-size:10px;color:#737d8d;background:#fff;border:1px solid #e7eaf0;padding:8px 12px;border-radius:9px}
+.admin-alert{border:1px solid #f2d29b;background:#fff8e9;color:#9b6515;padding:11px 14px;border-radius:10px;text-align:right;font:700 12px Cairo;cursor:pointer}
+.admin-tab-content{display:flex;flex-direction:column;gap:14px}
+.dash-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.dash-stat{background:#fff;border:1px solid #e8ebf0;border-radius:12px;padding:15px;display:flex;align-items:center;gap:12px;min-width:0;box-shadow:0 2px 7px #25324a08}
+.dash-stat>span{width:40px;height:40px;flex:none;border-radius:11px;background:#fff1e3;display:grid;place-items:center;font-size:19px}.dash-stat:nth-child(2)>span{background:#e7f6ee}.dash-stat:nth-child(3)>span{background:#eaf1ff}.dash-stat:nth-child(4)>span{background:#f1eaff}
+.dash-stat small,.dash-stat b,.dash-stat em{display:block}.dash-stat small{font-size:10px;color:#8992a0}.dash-stat b{font-size:18px;color:#252c39;line-height:1.7}.dash-stat em{font-style:normal;font-size:9px;color:#21a46b}
+.dash-panels{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(230px,1fr);gap:12px}
+.dash-panel{background:#fff;border:1px solid #e8ebf0;border-radius:12px;padding:15px;min-width:0;box-shadow:0 2px 7px #25324a08}
+.dash-panel-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}.dash-panel-head h3{font-size:13px;color:#252c39;margin:0}.dash-panel-head small{font-size:9px;color:#929aa7}.dash-chip{font-size:9px;padding:5px 9px;border-radius:20px;background:#f2f4f7;color:#727c8b}
+.dash-chart{height:150px;display:flex;align-items:flex-end;justify-content:space-around;gap:10px;padding:8px 5px 0;border-bottom:1px solid #edf0f4}
+.dash-bar{height:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;min-width:0}.dash-bar b{font-size:9px;color:#818b99}.dash-bar i{display:block;width:min(30px,75%);min-height:4px;background:linear-gradient(180deg,#f6ad55,#ed861d);border-radius:6px 6px 2px 2px}.dash-bar small{font-size:9px;color:#929aa7;white-space:nowrap}
+.dash-status{display:grid;grid-template-columns:75px minmax(40px,1fr) 24px;align-items:center;gap:8px;margin:12px 0;font-size:10px;color:#6f7887}.dash-status>div{height:7px;background:#f0f2f5;border-radius:8px;overflow:hidden}.dash-status>div i{height:100%;display:block;background:#ed922d;border-radius:8px}.dash-status b{color:#333b49;text-align:left}
+.dash-more{border:0;background:transparent;color:#e4821a;font:700 10px Cairo;cursor:pointer}
+.dash-order-table{width:100%;overflow:auto}.dash-order-row{display:grid;grid-template-columns:1fr 1.4fr 1fr .9fr;align-items:center;gap:10px;padding:10px 3px;border-bottom:1px solid #f0f1f4;font-size:10px;color:#555f6e;min-width:360px}.dash-order-row.head{font-weight:800;color:#8a93a1;background:#fafbfc}.dash-order-row>b{color:#303846}.dash-order-row>span:nth-child(3){font-weight:700;color:#303846}.dash-order-row>i{font-style:normal;background:#e8f7ee;color:#18864c;border-radius:15px;text-align:center;padding:4px 7px}
+#adm .admin-content .ac{background:#fff!important;border:1px solid #e8ebf0!important;border-radius:12px!important;color:#303846!important;box-shadow:0 2px 7px #25324a08}
+#adm .admin-content .ac h3{color:#303846!important}#adm .admin-content .mut,#adm .admin-content small{color:#87909e}
+#adm .admin-content input:not([type=checkbox]):not([type=file]),#adm .admin-content select,#adm .admin-content textarea{background:#fff!important;color:#303846!important;border:1px solid #dfe4eb!important}
+#adm .admin-content .ic{background:#fff!important;border-color:#e5e9ef!important;color:#303846}#adm .admin-content .cc button{background:#f5f6f8;color:#4b5564;border-color:#e5e9ef}#adm .admin-content .cc button.on{background:#ed861d;color:#fff;border-color:#ed861d}
+#adm .admin-content .btn{background:#ed861d;color:#fff}#adm .admin-content .btn.danger{background:#c83b42}
+#adm .admin-content .quick-actions{gap:9px}#adm .admin-content .quick-actions button{background:#29313e;border-radius:9px}
+@media(max-width:850px){.admin-layout{grid-template-columns:190px minmax(0,1fr)}.admin-content{padding:16px}.admin-topbar{padding:8px 16px}.dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+ #adm .box.adm>.x{top:8px!important;left:8px!important;width:32px;height:32px}
+ .admin-layout{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}
+ .admin-side{padding:8px 9px 7px;display:block}.admin-brand,.admin-side-caption,.admin-side-foot{display:none}
+ #adm .admin-side .at{flex-direction:row;overflow-x:auto;gap:5px;scrollbar-width:none}
+ #adm .admin-side .at button{width:auto;min-width:max-content;min-height:38px;padding:7px 10px;font-size:10px;gap:6px}
+ #adm .admin-side .at button span{font-size:14px;width:auto}
+ .admin-topbar{height:57px;padding:7px 12px}.admin-topbar h2{font-size:12px}.admin-top-user{padding-left:36px}.admin-top-user>span{width:30px;height:30px}
+ .admin-content{padding:12px 9px 24px;gap:11px}.admin-heading h1{font-size:17px}.admin-heading p{font-size:9px}.admin-heading>span{font-size:8px;padding:6px}
+ .dash-stats{gap:7px}.dash-stat{padding:9px;gap:7px}.dash-stat>span{width:30px;height:30px;font-size:15px}.dash-stat b{font-size:13px}.dash-stat small{font-size:8px}.dash-stat em{font-size:8px}
+ .dash-panels{grid-template-columns:1fr;gap:9px}.dash-chart{height:120px}.dash-panel{padding:11px}.dash-order-row{font-size:9px}
+}
+@media(min-width:601px){#adm .box.adm>.x{top:9px!important;left:9px!important}}
+/* Customer account view responsive layout */
+#account.sheet.open{align-items:center!important;justify-content:center!important;padding:12px!important}
+#account .account-box{width:min(1100px,96vw)!important;max-width:1100px!important;max-height:94dvh!important;overflow:auto!important;border-radius:18px!important}
+#account .account-box #authUser{display:block}
+#account .account-box .auth-welcome{border-radius:13px;background:#fff8ef;padding:15px;margin:8px 0 12px;color:#282e38;font-size:17px;font-weight:800}
+#account .account-box .auth-welcome small{display:block;font-size:11px;color:#7f8996;font-weight:400;margin-top:4px}
+#account .account-box .profile-status{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 14px}
+#account .account-box .auth-tabs{display:flex;gap:7px;border-bottom:1px solid #e7eaf0;padding-bottom:9px}
+#account .account-box .auth-tabs button{flex:1;border-radius:9px;background:#f3f5f8;color:#596273}
+#account .account-box .auth-tabs button.on{background:#ed861d;color:#fff;border-color:#ed861d}
+#account .account-box #pfPane,#account .account-box #ordPane{background:#fff;border:1px solid #e8ebf0;border-radius:12px;padding:15px}
+#account .account-box #pfPane label{display:block;color:#596273;font-size:12px;font-weight:700}
+#account .account-box #pfPane input,#account .account-box #pfPane textarea{width:100%;box-sizing:border-box;border:1px solid #dfe4eb;border-radius:9px;padding:11px;background:#fff;color:#26303d;margin:5px 0 10px}
+#account .account-box #authLogout{max-width:220px;margin:12px auto 0!important;display:block}
+#account .account-box #openAdm{max-width:260px}
+@media(min-width:760px){
+ #account .account-box #authUser{display:grid;grid-template-columns:250px minmax(0,1fr);grid-template-areas:"welcome welcome" "profile nav" "profile pane" "logout logout";gap:10px;align-items:start}
+ #account .account-box .auth-welcome{grid-area:welcome}
+ #account .account-box .profile-status{grid-area:profile;display:flex;flex-direction:column;margin:0}
+ #account .account-box .auth-tabs{grid-area:nav;align-self:start}
+ #account .account-box #pfPane,#account .account-box #ordPane{grid-area:pane;min-width:0}
+ #account .account-box #authLogout{grid-area:logout}
+ #account .account-box #verBox,#account .account-box #openAdm{grid-column:1/-1}
+}
+@media(max-width:600px){
+ #account.sheet.open{align-items:flex-end!important;padding:0!important}
+ #account .account-box{width:100%!important;max-width:none!important;max-height:94dvh!important;border-radius:18px 18px 0 0!important;padding:18px 13px!important}
+ #account .account-box .profile-status{grid-template-columns:1fr 1fr}
+ #account .account-box #pfPane,#account .account-box #ordPane{padding:11px}
+ #account .account-box #authLogout{max-width:none}
+}
 </style>
 
 </head>
@@ -980,22 +1054,39 @@ async function admOpen(){
 }
 const fld=(l,id,v,o={})=>`<div class="af"><label>${l}</label><input ${o.t?`type="${o.t}"`:''} data-f="${id}" ${o.d?`data-id="${o.d}"`:''} dir="${o.dir||'auto'}" value="${esc(v??'')}" ${o.ph?`placeholder="${o.ph}"`:''}>${o.h?`<small>${o.h}</small>`:''}</div>`;
 function admRender(){
-  const T=[['stats','📊','الرئيسية'],['orders','🧾','الطلبات'],['users','👥','العملاء'],['menu','🍽️','قائمة الطعام'],['set','⚙️','الإعدادات'],['logs','📜','سجل النشاط']];
-  if(AK.isMain)T.push(['admins','🛡️','الصلاحيات']);
-  const errs=Object.keys(A.err).map(k=>`<div class="ac"><span class="errmsg">⚠ ${k==='site'?'المحتوى':k==='users'?'المستخدمون':k==='orders'?'الطلبات':k==='logs'?'السجل':'الصلاحيات'}: ${esc(errMsg(A.err[k]))}</span></div>`).join('');
-  const pending=A.orders.filter(x=>(x.status||'new')==='new').length;
-  adm().innerHTML=`<div class="admin-layout"><aside class="admin-side"><div class="admin-brand"><span class="admin-brand-icon">🍴</span><div><b>أبو كريم</b><small>إدارة المطعم</small></div></div><div class="admin-side-caption">القائمة الرئيسية</div><nav class="at">${T.map(t=>`<button class="${A.tab===t[0]?'on':''}" data-x="tab" data-t="${t[0]}"><span>${t[1]}</span>${t[2]}</button>`).join('')}</nav><div class="admin-side-foot"><i class="admin-online"></i> النظام متصل</div></aside><section class="admin-workspace"><header class="admin-topbar"><div><small>لوحة التحكم / ${T.find(t=>t[0]===A.tab)?.[2]||'الرئيسية'}</small><h2>${A.tab==='stats'?'أهلاً بك، المدير':(T.find(t=>t[0]===A.tab)?.[2]||'لوحة الإدارة')}</h2></div><div class="admin-top-actions"><span class="admin-user-avatar">👤</span><span><b>${esc(AK.user?.displayName||AK.user?.email||'المدير')}</b><small>مدير النظام</small></span><button class="admin-refresh" data-x="reload">↻</button></div></header><main class="admin-content"><div class="admin-page-head"><div><h1>${A.tab==='stats'?'نظرة عامة':(T.find(t=>t[0]===A.tab)?.[2]||'')}</h1><p>تابع أداء المطعم وأدر جميع التفاصيل من مكان واحد</p></div><span class="admin-date">${new Date().toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long'})}</span></div>${pending&&A.tab!=='orders'?`<button class="admin-alert" data-x="tab" data-t="orders">🔔 لديك ${pending} طلب جديد يحتاج إلى المراجعة — عرض الطلبات</button>`:''}${errs}${({stats:tStats,orders:tOrders,users:tUsers,menu:tMenu,set:tSet,logs:tLogs,admins:tAdmins})[A.tab]()}</main></section></div>`;
+ const T=[['stats','📊','الرئيسية'],['orders','🧾','الطلبات'],['users','👥','المستخدمون'],['menu','🍽️','المنيو'],['set','⚙️','الإعدادات'],['logs','📜','السجل']];
+ if(AK.isMain)T.push(['admins','🛡️','الصلاحيات']);
+ const errs=Object.keys(A.err).map(k=>`<div class="ac"><span class="errmsg">⚠ ${k==='site'?'المحتوى':k==='users'?'المستخدمون':k==='orders'?'الطلبات':k==='logs'?'السجل':'الصلاحيات'}: ${esc(errMsg(A.err[k]))}</span></div>`).join('');
+ const pending=A.orders.filter(x=>(x.status||'new')==='new').length;
+ const tab=T.find(t=>t[0]===A.tab);
+ adm().innerHTML=`<div class="admin-layout">
+ <aside class="admin-side"><div class="admin-brand"><span class="admin-brand-icon">🍴</span><div><b>لقمة</b><small>لوحة الإدارة</small></div></div>
+ <div class="admin-side-caption">القائمة الرئيسية</div><nav class="at">${T.map(t=>`<button class="${A.tab===t[0]?'on':''}" data-x="tab" data-t="${t[0]}"><span>${t[1]}</span>${t[2]}</button>`).join('')}</nav>
+ <div class="admin-side-foot"><i></i> النظام متصل</div></aside>
+ <section class="admin-main"><header class="admin-topbar"><div><small>لوحة التحكم / ${tab?.[2]||'الرئيسية'}</small><h2>${A.tab==='stats'?'أهلاً بك في لوحة التحكم':(tab?.[2]||'لوحة الإدارة')}</h2></div><div class="admin-top-user"><span>👤</span><div><b>${esc(AK.user?.displayName||AK.user?.email||'المدير')}</b><small>مدير النظام</small></div><button data-x="reload" title="تحديث">↻</button></div></header>
+ <main class="admin-content"><div class="admin-heading"><div><h1>${A.tab==='stats'?'نظرة عامة':(tab?.[2]||'')}</h1><p>تابع أداء المطعم وأدر جميع التفاصيل من مكان واحد</p></div><span>${new Date().toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</span></div>
+ ${pending&&A.tab!=='orders'?`<button class="admin-alert" data-x="tab" data-t="orders">🔔 لديك ${pending} طلب جديد يحتاج إلى المراجعة — عرض الطلبات</button>`:''}
+ ${errs}<div class="admin-tab-content">${({stats:tStats,orders:tOrders,users:tUsers,menu:tMenu,set:tSet,logs:tLogs,admins:tAdmins})[A.tab]()}</div></main></section></div>`;
 }
 function tLogs(){return A.logs.length?`<section class="ac"><h3>📜 سجل العمليات الإدارية</h3>${A.logs.map(l=>`<div class="logr"><b>${esc(l.act)}</b><br><small class="mut" dir="ltr">${esc(l.by)} — ${fdate(l.at)}</small></div>`).join('')}</section>`:'<p class="empty">لا توجد عمليات مسجّلة بعد.</p>'}
 function tStats(){
- const today=new Date();today.setHours(0,0,0,0);const o=A.orders,cnt=st=>o.filter(x=>(x.status||'new')===st).length;
- const rev=o.filter(x=>x.status==='done').reduce((z,x)=>z+(+x.total||0),0),tod=o.filter(x=>ms(x.createdAt)>=today.getTime()).length;
- const active=A.users.filter(u=>Date.now()-ms(u.lastLoginAt||u.createdAt)<2592e6).length,items=D.cats.reduce((z,c)=>z+c.items.length,0);
- const card=(ico,n,l,sub)=>`<article class="dash-stat"><span class="dash-stat-ico">${ico}</span><div><small>${l}</small><b>${n}</b><em>${sub}</em></div></article>`;
- const days=Array.from({length:7},(_,i)=>{const d=new Date(today);d.setDate(d.getDate()-6+i);const e=new Date(d);e.setDate(e.getDate()+1);return {d,n:o.filter(x=>ms(x.createdAt)>=d.getTime()&&ms(x.createdAt)<e.getTime()).length}}),mx=Math.max(1,...days.map(x=>x.n));
- const bars=days.map(x=>`<div class="dash-bar-col"><b>${x.n}</b><i style="height:${Math.max(5,x.n/mx*100)}%"></i><small>${x.d.toLocaleDateString('ar-EG',{weekday:'short'})}</small></div>`).join('');
- const latest=[...o].sort((a,b)=>ms(b.createdAt)-ms(a.createdAt)).slice(0,5),rows=latest.map(x=>{const st=x.status||'new';return `<div class="latest-row"><b>#${esc(x.no||'—')}</b><span>${esc(x.name||'عميل')}</span><span>${(+x.total||0).toLocaleString('ar-EG')} ج.م</span><i>${(ST[st]||ST.new)[0]}</i></div>`}).join('');
- return `<div class="dash-stats">${card('🧾',o.length,'إجمالي الطلبات',`${tod} طلب اليوم`)}${card('💰',rev.toLocaleString('ar-EG')+' ج.م','إجمالي المبيعات','الطلبات المكتملة')}${card('👥',A.users.length,'إجمالي العملاء',`${active} نشط آخر 30 يوم`)}${card('🍽️',items,'الأصناف',`${D.cats.length} أقسام`)}</div><div class="dash-panels"><section class="dash-panel"><div class="dash-panel-head"><div><h3>حركة الطلبات</h3><small>عدد الطلبات خلال آخر 7 أيام</small></div><span class="dash-pill">آخر أسبوع</span></div><div class="dash-bars">${bars}</div></section><section class="dash-panel"><div class="dash-panel-head"><div><h3>حالة الطلبات</h3><small>توزيع الطلبات الحالية</small></div></div>${Object.keys(ST).map(k=>`<div class="status-line"><span>${ST[k][0]}</span><div><i style="width:${Math.min(100,cnt(k)/Math.max(1,o.length)*100)}%"></i></div><b>${cnt(k)}</b></div>`).join('')}</section></div><section class="dash-panel"><div class="dash-panel-head"><div><h3>أحدث الطلبات</h3><small>آخر الطلبات الواردة للمطعم</small></div><button class="dash-link" data-x="tab" data-t="orders">عرض كل الطلبات ←</button></div><div class="latest-table"><div class="latest-row latest-head"><b>رقم الطلب</b><span>اسم العميل</span><span>الإجمالي</span><i>الحالة</i></div>${rows||'<p class="empty">لا توجد طلبات حتى الآن.</p>'}</div></section><div class="quick-actions"><button class="btn sm" data-x="tab" data-t="orders">🧾 إدارة الطلبات</button><button class="btn sm" data-x="tab" data-t="users">👥 إدارة العملاء</button><button class="btn sm" data-x="tab" data-t="menu">🍽️ تعديل قائمة الطعام</button><button class="btn sm" data-x="reload">🔄 تحديث البيانات</button></div>`;
+ const t0=new Date();t0.setHours(0,0,0,0);const o=A.orders,cnt=s=>o.filter(x=>(x.status||'new')===s).length;
+ const rev=o.filter(x=>x.status==='done').reduce((s,x)=>s+(+x.total||0),0),today=o.filter(x=>ms(x.createdAt)>=t0.getTime()).length;
+ const items=D.cats.reduce((s,c)=>s+c.items.length,0),active=A.users.filter(u=>Date.now()-ms(u.lastLoginAt||u.createdAt)<2592e6).length;
+ const card=(ico,n,l,sub)=>`<article class="dash-stat"><span>${ico}</span><div><small>${l}</small><b>${n}</b><em>${sub}</em></div></article>`;
+ const days=Array.from({length:7},(_,i)=>{const d=new Date(t0);d.setDate(d.getDate()-6+i);const e=new Date(d);e.setDate(e.getDate()+1);return {d,n:o.filter(x=>ms(x.createdAt)>=d.getTime()&&ms(x.createdAt)<e.getTime()).length}});
+ const max=Math.max(1,...days.map(x=>x.n));
+ const latest=[...o].sort((a,b)=>ms(b.createdAt)-ms(a.createdAt)).slice(0,5);
+ const latestRows=latest.length?latest.map(x=>{const st=x.status||'new';return `<div class="dash-order-row"><b>#${esc(x.no||'—')}</b><span>${esc(x.name||'عميل')}</span><span>${(+x.total||0).toLocaleString('ar-EG')} ج.م</span><i>${(ST[st]||ST.new)[0]}</i></div>`}).join(''):'<p class="empty">لا توجد طلبات حتى الآن.</p>';
+ return `<div class="dash-stats">
+ ${card('🧾',o.length,'إجمالي الطلبات',`${today} طلب اليوم`)}
+ ${card('💰',rev.toLocaleString('ar-EG')+' ج.م','إجمالي المبيعات','الطلبات المكتملة')}
+ ${card('👥',A.users.length,'إجمالي العملاء',`${active} نشط آخر 30 يوم`)}
+ ${card('🍽️',items,'الأصناف المتاحة',`${D.cats.length} أقسام`)}</div>
+ <div class="dash-panels"><section class="dash-panel"><div class="dash-panel-head"><div><h3>إحصائيات الطلبات</h3><small>عدد الطلبات خلال آخر 7 أيام</small></div><span class="dash-chip">آخر أسبوع</span></div><div class="dash-chart">${days.map(x=>`<div class="dash-bar"><b>${x.n}</b><i style="height:${Math.max(5,x.n/max*100)}%"></i><small>${x.d.toLocaleDateString('ar-EG',{weekday:'short'})}</small></div>`).join('')}</div></section>
+ <section class="dash-panel"><div class="dash-panel-head"><div><h3>حالة الطلبات</h3><small>توزيع الطلبات الحالية</small></div></div>${Object.keys(ST).map(k=>`<div class="dash-status"><span>${ST[k][0]}</span><div><i style="width:${Math.min(100,cnt(k)/Math.max(1,o.length)*100)}%"></i></div><b>${cnt(k)}</b></div>`).join('')}</section></div>
+ <section class="dash-panel"><div class="dash-panel-head"><div><h3>أحدث الطلبات</h3><small>آخر الطلبات الواردة للمطعم</small></div><button class="dash-more" data-x="tab" data-t="orders">عرض كل الطلبات ←</button></div><div class="dash-order-table"><div class="dash-order-row head"><b>رقم الطلب</b><span>اسم العميل</span><span>الإجمالي</span><i>الحالة</i></div>${latestRows}</div></section>
+ <div class="quick-actions"><button class="btn sm" data-x="tab" data-t="orders">🧾 إدارة الطلبات</button><button class="btn sm" data-x="tab" data-t="users">👥 إدارة العملاء</button><button class="btn sm" data-x="tab" data-t="menu">🍽️ تعديل المنيو</button><button class="btn sm" data-x="reload">🔄 تحديث البيانات</button></div>`;
 }
 function tOrders(){
  const list=A.orders.filter(x=>{const q=A.oq.toLowerCase(),st=x.status||'new';return(A.ost==='all'||A.ost===st)&&(!q||[x.no,x.name,x.phone,x.address].join(' ').toLowerCase().includes(q))});
