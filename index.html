@@ -495,6 +495,18 @@ header .hr .ib{width:40px;height:40px}
 #admc .errmsg{color:#ff8a7a}
 .admc-search{margin-bottom:2px}
 @media(prefers-reduced-motion:reduce){#busy i{animation-duration:2s}}
+/* login v3 */
+.account-box{animation:akIn .35s ease both}
+@keyframes akIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.account-box input{transition:border-color .2s,box-shadow .2s}
+.account-box input:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px #d4a84433}
+.account-box .err{min-height:20px;transition:all .2s}.account-box .err.ok{color:#1f9d4d}
+.auth-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:14px;border:1.5px solid var(--ln);background:#fff;font-weight:800;cursor:pointer;transition:transform .15s,box-shadow .2s}
+.auth-google:hover{box-shadow:0 4px 14px #0002}.auth-google:active{transform:scale(.98)}.auth-google:disabled{opacity:.6;cursor:wait}
+.btn.ld{pointer-events:none;opacity:.85}.btn.ld::after{content:"";display:inline-block;width:14px;height:14px;margin-inline-start:8px;vertical-align:-2px;border-radius:50%;border:2px solid #fff6;border-top-color:#fff;animation:spin .7s linear infinite}
+.notif{background:#d98a0022;border:1px solid #d98a00;border-radius:12px;padding:8px 12px;margin-bottom:8px;font-size:.85rem;cursor:pointer}
+#admc .logr{font-size:.8rem;border-bottom:1px solid #ffffff14;padding:6px 0;line-height:1.6}
+@media(max-width:480px){.account-box{max-height:92vh;overflow:auto}}
 </style>
 </head>
 <body>
@@ -779,7 +791,7 @@ function msg(t,ok=true){const e=$i('toast');e.textContent=(ok?'✓ ':'⚠ ')+t;e
 const MSG={'auth/email-already-in-use':'البريد الإلكتروني مستخدم بالفعل. جرّب تسجيل الدخول.','auth/invalid-email':'البريد الإلكتروني غير صحيح.','auth/missing-password':'اكتب كلمة المرور.','auth/weak-password':'كلمة المرور ضعيفة؛ استخدم 6 أحرف على الأقل.','auth/invalid-credential':'البريد الإلكتروني أو كلمة المرور غير صحيحة.','auth/invalid-login-credentials':'البريد الإلكتروني أو كلمة المرور غير صحيحة.','auth/user-not-found':'لا يوجد حساب بهذا البريد الإلكتروني.','auth/wrong-password':'كلمة المرور غير صحيحة.','auth/user-disabled':'هذا الحساب موقوف. تواصل مع المطعم.','auth/too-many-requests':'محاولات كثيرة. حاول مرة أخرى لاحقًا.','auth/network-request-failed':'تعذر الاتصال بالإنترنت. حاول مرة أخرى.','auth/operation-not-allowed':'تسجيل الدخول بالبريد وكلمة المرور غير مفعّل في Firebase (Authentication ← Sign-in method ← Email/Password).','auth/unauthorized-domain':'هذا الدومين غير مضاف في Firebase (Authentication ← Settings ← Authorized domains).','auth/requires-recent-login':'لأسباب أمنية سجّل الخروج وادخل من جديد ثم أعد المحاولة.','auth/operation-not-supported-in-this-environment':'افتح الموقع من رابط الاستضافة (https) وليس من الملف مباشرة.','auth/configuration-not-found':'خدمة Authentication غير مفعّلة في مشروع Firebase.','permission-denied':'ليس لديك صلاحية لهذه العملية. (تأكد من نشر قواعد Firestore، وأن بريدك مُفعّل)','unavailable':'تعذر الاتصال بقاعدة البيانات. حاول مرة أخرى.','not-found':'قاعدة بيانات Firestore غير مُنشأة في المشروع بعد.','failed-precondition':'قاعدة بيانات Firestore غير جاهزة بعد.'};
 const LOADFAIL='تعذر تحميل خدمة Firebase. تأكد من اتصال الإنترنت (وأن الموقع غير محجوب) ثم حدّث الصفحة.';
 const errMsg=e=>e&&e.message==='load-failed'?LOADFAIL:(MSG[e&&e.code]||MSG[String(e&&e.code||'').replace('firestore/','')]||('تعذر إكمال العملية ('+((e&&(e.code||e.message))||'خطأ غير معروف')+')'));
-async function run(fn,ok){busy(1);try{await fn();if(ok)msg(ok);return true}catch(e){console.error(e);msg(errMsg(e),false);return false}finally{busy(0)}}
+async function run(fn,ok){const act=window._act;window._act=null;busy(1);try{await fn();if(ok)msg(ok);if(act)logAct(act);return true}catch(e){console.error(e);msg(errMsg(e),false);return false}finally{busy(0)}}
 const validEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 const validPhone=v=>!v||/^\+?[0-9٠-٩\s-]{10,15}$/.test(v);
 
@@ -828,8 +840,9 @@ async function onUser(u){
   const ref=fs.doc(db,'users',u.uid);let p=await fs.getDoc(ref);
   if(!p.exists()){const d={name:u.displayName||(u.email||'').split('@')[0]||'عضو',phone:'',address:'',email:u.email,createdAt:fs.serverTimestamp(),updatedAt:fs.serverTimestamp(),blocked:false};await fs.setDoc(ref,d);p=await fs.getDoc(ref)}
   AK.profile=p.data();
+  if(!AK.profile.blocked&&!AK.creating)fs.updateDoc(ref,{lastLoginAt:fs.serverTimestamp()}).catch(e=>console.warn(e));
   if(AK.profile.blocked){await au.signOut(auth);msg('هذا الحساب موقوف. تواصل مع المطعم.',false);return}
- }catch(e){console.warn(e);AK.profile={name:u.displayName||'',phone:'',address:''}}
+ }catch(e){console.error(e);if(e&&e.code==='permission-denied'){await au.signOut(auth);msg(errMsg(e),false);return}AK.profile={name:u.displayName||'',phone:'',address:''}}
  AK.isMain=!!u.email&&u.email.toLowerCase()===MAIN_ADMIN&&u.emailVerified;
  AK.isAdmin=AK.isMain;
  if(!AK.isMain){try{AK.isAdmin=(await fs.getDoc(fs.doc(db,'admins',u.uid))).exists()}catch(e){}}
@@ -860,7 +873,7 @@ $i('authForm').addEventListener('submit',async ev=>{
  if(!pw)return say('اكتب كلمة المرور.');
  if(su&&pw.length<6)return say('كلمة المرور ضعيفة؛ استخدم 6 أحرف على الأقل.');
  if(su&&pw!==$i('authPassword2').value)return say('كلمتا المرور غير متطابقتين.');
- busy(1);
+ busy(1);$i('authSubmit').classList.add('ld');
  try{
   const {au,fs,auth,db}=await loadFB();
   if(su){
@@ -876,30 +889,25 @@ $i('authForm').addEventListener('submit',async ev=>{
   }else{await au.signInWithEmailAndPassword(auth,email,pw)}
   $i('authPassword').value='';$i('authPassword2').value='';
  }catch(e){console.error(e);say(errMsg(e))}
- finally{busy(0)}
+ finally{busy(0);$i('authSubmit').classList.remove('ld')}
 });
 
+const gBtn=on=>{const b=$i('authGoogle');b.disabled=on;b.querySelector('span:last-child').textContent=on?'جارٍ الاتصال بـ Google…':'المتابعة باستخدام Google'};
+const gErr=e=>{const c=e&&e.code;return c==='auth/popup-closed-by-user'?'تم إغلاق نافذة Google قبل إكمال تسجيل الدخول.':c==='auth/popup-blocked'?'المتصفح منع نافذة Google. اسمح بالنوافذ المنبثقة ثم حاول مرة أخرى.':c==='auth/account-exists-with-different-credential'?'هذا البريد مسجّل بطريقة أخرى (بريد وكلمة مرور). سجّل الدخول بها أولًا.':c==='auth/operation-not-allowed'?'تسجيل الدخول عبر Google غير مفعّل في Firebase (Authentication ← Sign-in method ← Google).':errMsg(e)};
 $i('authGoogle').onclick=async()=>{
- const btn=$i('authGoogle');
- btn.disabled=true;btn.querySelector('span:last-child').textContent='جارٍ الاتصال بـ Google…';
- say('');
+ if(AK.gbusy)return;AK.gbusy=true;gBtn(true);say('');
  try{
   const {au,auth}=await loadFB();
-  const provider=new au.GoogleAuthProvider();
-  provider.setCustomParameters({prompt:'select_account'});
-  await au.signInWithPopup(auth,provider);
-  $i('authPassword').value='';$i('authPassword2').value='';
-  closeS('account');
-  msg('تم تسجيل الدخول باستخدام Google');
+  const provider=new au.GoogleAuthProvider();provider.setCustomParameters({prompt:'select_account'});
+  try{await au.signInWithPopup(auth,provider)}
+  catch(e){
+   if(e&&(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-this-environment')){await au.signInWithRedirect(auth,provider);return}
+   throw e;
+  }
+  $i('authPassword').value='';$i('authPassword2').value='';closeS('account');
  }catch(e){
-  console.error(e);
-  if(e&&e.code==='auth/popup-closed-by-user')say('تم إغلاق نافذة Google قبل إكمال تسجيل الدخول.');
-  else if(e&&e.code==='auth/popup-blocked')say('المتصفح منع نافذة Google. اسمح بالنوافذ المنبثقة ثم حاول مرة أخرى.');
-  else if(e&&e.code==='auth/account-exists-with-different-credential')say('هذا البريد مسجّل بطريقة أخرى. سجّل الدخول بالطريقة الأصلية أولًا.');
-  else say(errMsg(e));
- }finally{
-  btn.disabled=false;btn.querySelector('span:last-child').textContent='المتابعة باستخدام Google';
- }
+  console.error(e);if(!e||e.code!=='auth/cancelled-popup-request')say(gErr(e));
+ }finally{AK.gbusy=false;gBtn(false)}
 };
 $i('authForgot').onclick=()=>{const email=$i('authEmail').value.trim();if(!validEmail(email))return say('اكتب بريدك الإلكتروني أولًا ثم اضغط «نسيت كلمة المرور؟».');
  run(async()=>{const {au,auth}=await loadFB();await au.sendPasswordResetEmail(auth,email);say('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك (راجع الرسائل غير المرغوبة أيضًا).',true)})};
@@ -934,8 +942,10 @@ AK.saveOrder=async o=>{
 };
 
 /* ---------- لوحة الإدارة ---------- */
-const A={tab:'stats',cat:0,users:[],orders:[],admins:[],err:{},q:'',oq:'',ost:'all',open:null,imgs:{},set:null};
-AK.onOpen=i=>{if(i==='adm')admOpen()};
+async function logAct(act){try{const {fs,db}=await loadFB();const r={by:AK.user.email||'',uid:AK.user.uid,act:String(act).slice(0,200),at:fs.serverTimestamp()};await fs.addDoc(fs.collection(db,'adminLogs'),r);A.logs.unshift({...r,at:{toMillis:()=>Date.now()}})}catch(e){console.warn('log',e)}}
+const SENS={ublock:'حظر/إلغاء حظر مستخدم',udel:'حذف مستخدم',uadm:'تغيير دور مستخدم',addadm:'إضافة مدير',radm:'إزالة مدير',usave:'تعديل بيانات مستخدم',odel:'حذف طلب',ost:'تغيير حالة طلب',sset:'تعديل إعدادات الموقع',cdel:'حذف قسم',idel:'حذف صنف',seed:'نشر المنيو'};
+const A={logs:[],tab:'stats',cat:0,users:[],orders:[],admins:[],err:{},q:'',oq:'',ost:'all',open:null,imgs:{},set:null};
+window._act=null;AK.onOpen=i=>{if(i==='adm')admOpen()};
 const adm=()=>$i('admc');
 async function admOpen(){
  if(!AK.user||!AK.isAdmin){closeS('adm');msg('هذه اللوحة مخصصة للإدارة فقط.',false);return}
@@ -943,7 +953,7 @@ async function admOpen(){
  try{
   const {fs,db}=await loadFB();
   const g=async(k,q)=>{try{return(await fs.getDocs(q)).docs.map(d=>({id:d.id,...d.data()}))}catch(e){A.err[k]=e;return[]}};
-  [A.users,A.orders,A.admins]=await Promise.all([g('users',fs.collection(db,'users')),g('orders',fs.query(fs.collection(db,'orders'),fs.orderBy('createdAt','desc'),fs.limit(200))),g('admins',fs.collection(db,'admins'))]);
+  [A.users,A.orders,A.admins,A.logs]=await Promise.all([g('users',fs.collection(db,'users')),g('orders',fs.query(fs.collection(db,'orders'),fs.orderBy('createdAt','desc'),fs.limit(200))),g('admins',fs.collection(db,'admins')),g('logs',fs.query(fs.collection(db,'adminLogs'),fs.orderBy('at','desc'),fs.limit(100)))]);
   A.users.sort((a,b)=>ms(b.createdAt)-ms(a.createdAt));
   try{await loadSite()}catch(e){A.err.site=e}
   admRender();
@@ -951,19 +961,20 @@ async function admOpen(){
 }
 const fld=(l,id,v,o={})=>`<div class="af"><label>${l}</label><input ${o.t?`type="${o.t}"`:''} data-f="${id}" ${o.d?`data-id="${o.d}"`:''} dir="${o.dir||'auto'}" value="${esc(v??'')}" ${o.ph?`placeholder="${o.ph}"`:''}>${o.h?`<small>${o.h}</small>`:''}</div>`;
 function admRender(){
- const T=[['stats','📊','الإحصائيات'],['orders','🧾','الطلبات'],['users','👥','المستخدمون'],['menu','🍽️','المنيو'],['set','⚙️','الإعدادات']];
+ const T=[['stats','📊','الإحصائيات'],['orders','🧾','الطلبات'],['users','👥','المستخدمون'],['menu','🍽️','المنيو'],['set','⚙️','الإعدادات'],['logs','📜','السجل']];
  if(AK.isMain)T.push(['admins','🛡️','الصلاحيات']);
- const errs=Object.keys(A.err).map(k=>`<div class="ac"><span class="errmsg">⚠ ${k==='site'?'المحتوى':k==='users'?'المستخدمون':k==='orders'?'الطلبات':'الصلاحيات'}: ${esc(errMsg(A.err[k]))}</span></div>`).join('');
+ const errs=Object.keys(A.err).map(k=>`<div class="ac"><span class="errmsg">⚠ ${k==='site'?'المحتوى':k==='users'?'المستخدمون':k==='orders'?'الطلبات':k==='logs'?'السجل':'الصلاحيات'}: ${esc(errMsg(A.err[k]))}</span></div>`).join('');
  const sc=adm().scrollTop;
- adm().innerHTML=`<div class="at">${T.map(t=>`<button class="${A.tab===t[0]?'on':''}" data-x="tab" data-t="${t[0]}"><span>${t[1]}</span>${t[2]}</button>`).join('')}</div><div class="ap">${errs}${({stats:tStats,orders:tOrders,users:tUsers,menu:tMenu,set:tSet,admins:tAdmins})[A.tab]()}</div>`;
+ adm().innerHTML=`<div class="at">${T.map(t=>`<button class="${A.tab===t[0]?'on':''}" data-x="tab" data-t="${t[0]}"><span>${t[1]}</span>${t[2]}</button>`).join('')}</div><div class="ap">${errs}${(()=>{const c=A.orders.filter(x=>(x.status||'new')==='new').length;return c&&A.tab!=='orders'?`<div class="notif" data-x="tab" data-t="orders">🔔 لديك ${c} طلب جديد قيد المراجعة — اضغط للعرض</div>`:''})()}${({stats:tStats,orders:tOrders,users:tUsers,menu:tMenu,set:tSet,logs:tLogs,admins:tAdmins})[A.tab]()}</div>`;
  adm().scrollTop=sc;
 }
+function tLogs(){return A.logs.length?`<section class="ac"><h3>📜 سجل العمليات الإدارية</h3>${A.logs.map(l=>`<div class="logr"><b>${esc(l.act)}</b><br><small class="mut" dir="ltr">${esc(l.by)} — ${fdate(l.at)}</small></div>`).join('')}</section>`:'<p class="empty">لا توجد عمليات مسجّلة بعد.</p>'}
 function tStats(){
  const t0=new Date();t0.setHours(0,0,0,0);const o=A.orders,cnt=s=>o.filter(x=>(x.status||'new')===s).length;
  const rev=o.filter(x=>x.status==='done').reduce((s,x)=>s+(+x.total||0),0),today=o.filter(x=>ms(x.createdAt)>=t0.getTime()).length;
  const items=D.cats.reduce((s,c)=>s+c.items.length,0),mx=Math.max(1,...Object.keys(ST).map(cnt));
  const card=(n,l)=>`<div class="stc"><b>${n}</b><span>${l}</span></div>`;
- return `<div class="stg">${card(A.users.length,'مستخدم مسجّل')}${card(o.length,'إجمالي الطلبات')}${card(today,'طلبات اليوم')}${card(cnt('new'),'قيد المراجعة')}${card(rev+' ج.م','مبيعات (تم التسليم)')}${card(items+' / '+D.cats.length,'أصناف / أقسام')}</div><section class="ac"><h3>الطلبات حسب الحالة</h3>${Object.keys(ST).map(k=>`<div class="bar"><span style="width:96px">${ST[k][0]}</span><i style="width:${cnt(k)/mx*55}%"></i><b>${cnt(k)}</b></div>`).join('')}<small class="mut">الإحصائيات محسوبة من آخر 200 طلب.</small></section><div class="quick-actions"><button class="btn sm" data-x="tab" data-t="orders">🧾 إدارة الطلبات</button><button class="btn sm" data-x="tab" data-t="users">👥 إدارة العملاء</button><button class="btn sm" data-x="tab" data-t="menu">🍽️ تعديل المنيو</button><button class="btn sm" data-x="reload">🔄 تحديث البيانات</button></div>`;
+ return `<div class="stg">${card(A.users.length,'إجمالي المستخدمين')}${card(A.users.filter(u=>Date.now()-ms(u.lastLoginAt||u.createdAt)<2592e6).length,'مستخدمون نشطون (30 يوم)')}${card(A.users.filter(u=>Date.now()-ms(u.createdAt)<6048e5).length,'حسابات جديدة (7 أيام)')}${card(o.length+A.logs.length,'إجمالي العمليات')}${card(o.length,'إجمالي الطلبات')}${card(today,'طلبات اليوم')}${card(cnt('new'),'قيد المراجعة')}${card(rev+' ج.م','مبيعات (تم التسليم)')}${card(items+' / '+D.cats.length,'أصناف / أقسام')}</div><section class="ac"><h3>الطلبات حسب الحالة</h3>${Object.keys(ST).map(k=>`<div class="bar"><span style="width:96px">${ST[k][0]}</span><i style="width:${cnt(k)/mx*55}%"></i><b>${cnt(k)}</b></div>`).join('')}<small class="mut">الإحصائيات محسوبة من آخر 200 طلب.</small></section><div class="quick-actions"><button class="btn sm" data-x="tab" data-t="orders">🧾 إدارة الطلبات</button><button class="btn sm" data-x="tab" data-t="users">👥 إدارة العملاء</button><button class="btn sm" data-x="tab" data-t="menu">🍽️ تعديل المنيو</button><button class="btn sm" data-x="reload">🔄 تحديث البيانات</button></div>`;
 }
 function tOrders(){
  const list=A.orders.filter(x=>{const q=A.oq.toLowerCase(),st=x.status||'new';return(A.ost==='all'||A.ost===st)&&(!q||[x.no,x.name,x.phone,x.address].join(' ').toLowerCase().includes(q))});
@@ -1022,13 +1033,13 @@ async function packImg(file){
 async function reloadAll(){await loadSite();admRender()}
 adm().addEventListener('input',e=>{if(e.target.dataset.x==='uq'||e.target.dataset.x==='oq'){const key=e.target.dataset.x==='uq'?'q':'oq';A[key]=e.target.value;const p=e.target.selectionStart;admRender();const n=adm().querySelector(`[data-x="${e.target.dataset.x}"]`);if(n){n.focus();n.setSelectionRange(p,p)}}});
 adm().addEventListener('change',async e=>{
- const t=e.target;
+ const t=e.target;window._act=t.dataset.x==='ost'?SENS.ost:null;
  if(t.dataset.x==='ofilter'){A.ost=t.value;admRender();return}
  if(t.dataset.x==='ost'){const id=t.dataset.id;await run(async()=>{const {fs,db}=await loadFB();await fs.updateDoc(fs.doc(db,'orders',id),{status:t.value});const o=A.orders.find(x=>x.id===id);if(o)o.status=t.value;admRender()},'تم تحديث حالة الطلب');return}
  if(t.dataset.up&&t.files[0]){const id=t.dataset.up;await run(async()=>{A.imgs[id]=await packImg(t.files[0]);A.open=id;admRender()},'تم تجهيز الصورة — اضغط «حفظ الصنف»')}
 });
 adm().addEventListener('click',async e=>{
- const b=e.target.closest('button[data-x]');if(!b)return;const d=b.dataset,id=d.id;
+ const b=e.target.closest('[data-x]');if(!b||b.matches('input,select'))return;const d=b.dataset,id=d.id;const uu=A.users.find(u=>u.id===id);window._act=SENS[d.x]?SENS[d.x]+(uu&&uu.email?' — '+uu.email:''):null;
  const U=()=>A.users.find(u=>u.id===id);
  switch(d.x){
  case 'tab':if(A.tab==='set')syncSet();A.tab=d.t;A.open=null;return admRender();
@@ -1064,7 +1075,7 @@ adm().addEventListener('click',async e=>{
 
 /* ---------- تشغيل ---------- */
 (async()=>{
- try{const {au,auth}=await loadFB();au.onAuthStateChanged(auth,u=>{onUser(u).catch(e=>console.error(e))})}catch(e){console.error(e)}
+ try{const {au,auth}=await loadFB();au.getRedirectResult(auth).catch(e=>{console.error(e);say(gErr(e));openS('account')});au.onAuthStateChanged(auth,u=>{onUser(u).catch(e=>console.error(e))})}catch(e){console.error(e)}
  try{await loadSite()}catch(e){console.warn('site data:',e)}
 })();
 
