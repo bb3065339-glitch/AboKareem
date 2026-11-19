@@ -568,35 +568,41 @@ header .hr .ib{width:40px;height:40px}
  .dash-panels{grid-template-columns:1fr;gap:9px}.dash-chart{height:120px}.dash-panel{padding:11px}.dash-order-row{font-size:9px}
 }
 @media(min-width:601px){#adm .box.adm>.x{top:9px!important;left:9px!important}}
-/* Customer account view responsive layout */
-#account.sheet.open{align-items:center!important;justify-content:center!important;padding:12px!important}
-#account .account-box{width:min(1100px,96vw)!important;max-width:1100px!important;max-height:94dvh!important;overflow:auto!important;border-radius:18px!important}
-#account .account-box #authUser{display:block}
-#account .account-box .auth-welcome{border-radius:13px;background:#fff8ef;padding:15px;margin:8px 0 12px;color:#282e38;font-size:17px;font-weight:800}
-#account .account-box .auth-welcome small{display:block;font-size:11px;color:#7f8996;font-weight:400;margin-top:4px}
-#account .account-box .profile-status{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 14px}
-#account .account-box .auth-tabs{display:flex;gap:7px;border-bottom:1px solid #e7eaf0;padding-bottom:9px}
-#account .account-box .auth-tabs button{flex:1;border-radius:9px;background:#f3f5f8;color:#596273}
+/* Customer account dashboard — inspired by the supplied reference */
+#account.sheet.open{align-items:center!important;justify-content:center!important;padding:14px!important;background:rgba(15,20,28,.58)}
+#account .account-box{width:min(1120px,97vw)!important;max-width:1120px!important;max-height:94dvh!important;overflow:auto!important;border-radius:18px!important;padding:22px!important;background:#f4f5f8!important;color:#202633!important;border:1px solid #e4e7ed!important;box-shadow:0 18px 60px #0004!important}
+#account .account-box>h2{margin:0 0 16px!important;padding:0 0 13px;border-bottom:1px solid #e2e5eb;color:#202633!important;font-size:22px}
+#account .account-box>.x{position:sticky;float:left;top:0;z-index:5;background:#fff;color:#313946;border:1px solid #e4e7ed}
+#account .account-box #authGuest{max-width:480px;margin:22px auto;background:#fff;padding:22px;border:1px solid #e5e8ee;border-radius:16px;box-shadow:0 3px 14px #1c24300c}
+#account .account-box #authUser{display:grid;grid-template-columns:280px minmax(0,1fr);grid-template-areas:"welcome welcome" "profile nav" "profile pane" "profile ver" "logout logout";gap:12px;align-items:start}
+#account .account-box .auth-welcome{grid-area:welcome;display:flex;flex-direction:column;justify-content:center;min-height:92px;border:1px solid #e4e7ed;border-radius:14px;background:#fff!important;padding:17px 20px;margin:0!important;color:#202633!important;font-size:20px;font-weight:800;box-shadow:0 2px 8px #17203308}
+#account .account-box .auth-welcome small{font-size:13px;color:#737d8c;margin-top:4px;font-weight:500}
+#account .account-box .profile-status{grid-area:profile;display:flex;flex-direction:column;gap:9px;margin:0!important;padding:14px;background:#fff;border:1px solid #e4e7ed;border-radius:14px}
+#account .account-box .profile-status span{background:#f7f8fa;border:1px solid #edf0f4;border-radius:10px;padding:12px;color:#697383;font-size:12px}
+#account .account-box .profile-status b{color:#252d3a;font-size:14px;margin-top:3px}
+#account .account-box .auth-tabs{grid-area:nav;display:flex;gap:8px;padding:0 0 10px;border:0;border-bottom:1px solid #e2e5eb}
+#account .account-box .auth-tabs button{flex:1;background:#fff;border:1px solid #e1e5eb;border-radius:10px;padding:10px;color:#515d6e;font-weight:800}
 #account .account-box .auth-tabs button.on{background:#ed861d;color:#fff;border-color:#ed861d}
-#account .account-box #pfPane,#account .account-box #ordPane{background:#fff;border:1px solid #e8ebf0;border-radius:12px;padding:15px}
-#account .account-box #pfPane label{display:block;color:#596273;font-size:12px;font-weight:700}
-#account .account-box #pfPane input,#account .account-box #pfPane textarea{width:100%;box-sizing:border-box;border:1px solid #dfe4eb;border-radius:9px;padding:11px;background:#fff;color:#26303d;margin:5px 0 10px}
-#account .account-box #authLogout{max-width:220px;margin:12px auto 0!important;display:block}
-#account .account-box #openAdm{max-width:260px}
-@media(min-width:760px){
- #account .account-box #authUser{display:grid;grid-template-columns:250px minmax(0,1fr);grid-template-areas:"welcome welcome" "profile nav" "profile pane" "logout logout";gap:10px;align-items:start}
- #account .account-box .auth-welcome{grid-area:welcome}
- #account .account-box .profile-status{grid-area:profile;display:flex;flex-direction:column;margin:0}
- #account .account-box .auth-tabs{grid-area:nav;align-self:start}
- #account .account-box #pfPane,#account .account-box #ordPane{grid-area:pane;min-width:0}
- #account .account-box #authLogout{grid-area:logout}
- #account .account-box #verBox,#account .account-box #openAdm{grid-column:1/-1}
-}
-@media(max-width:600px){
+#account .account-box #pfPane,#account .account-box #ordPane{grid-area:pane;min-width:0;background:#fff;border:1px solid #e4e7ed;border-radius:14px;padding:18px;box-shadow:0 2px 8px #17203308}
+#account .account-box #pfPane label{display:block;color:#566172;font-size:13px;font-weight:800;margin:8px 0 4px}
+#account .account-box #pfPane input,#account .account-box #pfPane textarea{width:100%;box-sizing:border-box;border:1px solid #dfe4eb;border-radius:9px;padding:12px;background:#fff;color:#26303d;margin:4px 0 9px}
+#account .account-box #pfPane input:focus,#account .account-box #pfPane textarea:focus{outline:2px solid #ed861d33;border-color:#ed861d}
+#account .account-box #pfSave{background:#ed861d;color:#fff;border-radius:10px}
+#account .account-box #pfPw,#account .account-box #delAcc{background:#fff;color:#465264;border:1px solid #dfe4eb;border-radius:10px}
+#account .account-box .dz{margin-top:14px;padding-top:10px;border-top:1px solid #edf0f4}
+#account .account-box #authLogout{grid-area:logout;max-width:220px;margin:0 auto!important;background:#252b35;color:#fff;border-radius:10px}
+#account .account-box #verBox{grid-area:ver}
+#account .account-box #openAdm{grid-column:1/-1;background:#ed861d;color:#fff;border-radius:10px}
+#account .account-box .ordc{background:#fff;border:1px solid #e5e8ee;border-radius:11px;padding:13px;margin:9px 0;color:#273142}
+#account .account-box .ordc small{display:block;color:#6e7888;margin-top:5px;line-height:1.7}
+#account .account-box .stt{border-radius:20px;padding:4px 10px;font-size:12px}
+@media(max-width:700px){
  #account.sheet.open{align-items:flex-end!important;padding:0!important}
- #account .account-box{width:100%!important;max-width:none!important;max-height:94dvh!important;border-radius:18px 18px 0 0!important;padding:18px 13px!important}
- #account .account-box .profile-status{grid-template-columns:1fr 1fr}
- #account .account-box #pfPane,#account .account-box #ordPane{padding:11px}
+ #account .account-box{width:100%!important;max-width:none!important;max-height:95dvh!important;border-radius:18px 18px 0 0!important;padding:16px 12px calc(16px + env(safe-area-inset-bottom,0px))!important}
+ #account .account-box #authUser{grid-template-columns:1fr;grid-template-areas:"welcome" "profile" "nav" "pane" "ver" "logout";gap:9px}
+ #account .account-box .profile-status{display:grid;grid-template-columns:1fr 1fr;padding:10px}
+ #account .account-box .profile-status span{padding:9px}
+ #account .account-box #pfPane,#account .account-box #ordPane{padding:12px}
  #account .account-box #authLogout{max-width:none}
 }
 </style>
@@ -638,7 +644,7 @@ header .hr .ib{width:40px;height:40px}
 
 <div class="sheet" id="adm"><div class="box adm"><button class="x" onclick="closeS('adm')" aria-label="إغلاق">✕</button><h2 style="margin-top:0">🛡️ لوحة الإدارة</h2><div id="admc"></div></div></div>
 
-<div class="sheet" id="account"><div class="box account-box"><button class="x" onclick="closeS('account')" aria-label="إغلاق">✕</button><h2 style="margin-top:0">👤 حسابك</h2>
+<div class="sheet" id="account"><div class="box account-box"><button class="x" onclick="closeS('account')" aria-label="إغلاق">✕</button><h2 style="margin-top:0">👤 حسابي الشخصي</h2>
 <div id="authGuest"><div class="auth-tabs"><button type="button" id="authLoginTab" class="on">تسجيل الدخول</button><button type="button" id="authSignupTab">إنشاء حساب</button></div>
 <form id="authForm" novalidate onsubmit="return false">
 <div id="authNameWrap" hidden><label for="authName">الاسم</label><input id="authName" autocomplete="name" maxlength="60" placeholder="اكتب اسمك">
@@ -652,10 +658,10 @@ header .hr .ib{width:40px;height:40px}
 <p class="auth-google-note">سجّل الدخول أو أنشئ حسابًا جديدًا باستخدام حساب Google الخاص بك.</p>
 </div>
 <div id="authUser" hidden>
-<div class="auth-welcome">أهلاً وسهلاً، <span id="authDisplayName"></span> 👋<small id="authEmailShow"></small></div><div class="profile-status" id="profileStatus"></div>
+<div class="auth-welcome">أهلاً بيك، <span id="authDisplayName"></span> 👋<small id="authEmailShow">بيانات حسابك وطلباتك في مكان واحد</small></div><div class="profile-status" id="profileStatus"></div>
 <div id="verBox" class="ver" hidden>⚠️ بريدك الإلكتروني غير مُفعّل بعد. افتح رسالة التفعيل التي أرسلناها لك (راجع الرسائل غير المرغوبة أيضًا).<div class="row"><button class="btn sm2" id="verSend" type="button">إعادة إرسال الرسالة</button><button class="btn sm2 line2" id="verRefresh" type="button">فعّلت بريدي — تحديث</button></div></div>
 <button class="btn gold" id="openAdm" type="button" style="width:100%;margin:6px 0" hidden>🛡️ فتح لوحة الإدارة</button>
-<div class="auth-tabs"><button type="button" id="pfTab" class="on">الملف الشخصي</button><button type="button" id="ordTab">طلباتي</button></div>
+<div class="auth-tabs"><button type="button" id="pfTab" class="on">👤 بياناتي الشخصية</button><button type="button" id="ordTab">🧾 طلباتي السابقة</button></div>
 <div id="pfPane" class="pane"><label for="pfName">الاسم</label><input id="pfName" maxlength="60"><label for="pfPhone">رقم الهاتف</label><input id="pfPhone" type="tel" dir="ltr" maxlength="20"><label for="pfAddr">العنوان (للتوصيل)</label><textarea id="pfAddr" rows="2" maxlength="200"></textarea>
 <div class="err" id="pfErr" role="alert"></div><button class="btn" id="pfSave" type="button" style="width:100%">💾 حفظ البيانات</button>
 <button class="btn line2" id="pfPw" type="button" style="width:100%">🔑 إرسال رابط تغيير كلمة المرور</button><div class="dz"><label id="delAccLabel" for="delPw">حذف حسابي نهائيًا (أعد تأكيد هويتك)</label><input id="delPw" type="password" dir="ltr" autocomplete="current-password" placeholder="كلمة المرور للتأكيد"><button class="btn line2" id="delAcc" type="button" style="width:100%;margin-top:6px">🗑 حذف الحساب</button></div></div>
