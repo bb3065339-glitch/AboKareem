@@ -1104,7 +1104,7 @@ function admRender(){
  const pending=A.orders.filter(x=>(x.status||'new')==='new').length;
  const tab=T.find(t=>t[0]===A.tab);
  adm().innerHTML=`<div class="admin-layout">
- <aside class="admin-side"><div class="admin-brand"><span class="admin-brand-icon">🍴</span><div><b>لقمة</b><small>لوحة الإدارة</small></div></div>
+ <aside class="admin-side"><div class="admin-brand"><span class="admin-brand-icon">🍴</span><div><b>ابو كريم الحاتي</b><small>لوحة الإدارة</small></div></div>
  <div class="admin-side-caption">القائمة الرئيسية</div><nav class="at">${T.map(t=>`<button class="${A.tab===t[0]?'on':''}" data-x="tab" data-t="${t[0]}"><span>${t[1]}</span>${t[2]}</button>`).join('')}</nav>
  <div class="admin-side-foot"><i></i> النظام متصل</div></aside>
  <section class="admin-main"><header class="admin-topbar"><div><small>لوحة التحكم / ${tab?.[2]||'الرئيسية'}</small><h2>${A.tab==='stats'?'أهلاً بك في لوحة التحكم':(tab?.[2]||'لوحة الإدارة')}</h2></div><div class="admin-top-user"><span>👤</span><div><b>${esc(AK.user?.displayName||AK.user?.email||'المدير')}</b><small>مدير النظام</small></div><button data-x="reload" title="تحديث">↻</button></div></header>
