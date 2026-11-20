@@ -1235,7 +1235,17 @@ async function loadMyOrders(){
 /* حفظ الطلب في قاعدة البيانات (بالتوازي مع إرسال واتساب — لا يعطّل الطلب لو فشل) */
 AK.saveOrder=async o=>{
  try{const {fs,db}=await loadFB();
-  await fs.addDoc(fs.collection(db,'orders'),{no:o.no,uid:AK.user?AK.user.uid:null,name:String(o.n).slice(0,80),phone:String(o.p).slice(0,20),type:o.t,address:String(o.a||'').slice(0,300),items:cart.map(x=>({n:String(x.n),v:String(x.v||''),p:+x.p,q:+x.q,x:String(x.x||'').slice(0,200)})),subtotal:o.s,fee:o.f,total:o.s+o.f,notes:String(o.nt||'').slice(0,500),status:'new',createdAt:fs.serverTimestamp()});
+  await fs.addDoc(fs.collection(db,'orders'),{
+   no:String(o.no||'').slice(0,40),
+   uid:AK.user?AK.user.uid:null,
+   name:String(o.n||'').trim().slice(0,80),
+   phone:String(o.p||'').trim().slice(0,20),
+   type:o.t,
+   address:String(o.a||'').slice(0,300),
+   items:cart.map(x=>({n:String(x.n||'').slice(0,80),v:String(x.v||'').slice(0,80),p:+x.p||0,q:Math.max(1,Math.floor(+x.q||1)),x:String(x.x||'').slice(0,200)})),
+   subtotal:+o.s||0,fee:+o.f||0,total:(+o.s||0)+(+o.f||0),
+   notes:String(o.nt||'').slice(0,500),status:'new',createdAt:fs.serverTimestamp()
+  });
   return true;
  }catch(e){console.error(e);if(AK.user)msg('تم إرسال الطلب على واتساب، لكن تعذر حفظه في حسابك.',false);return false}
 };
@@ -1445,7 +1455,25 @@ AK.walletUse=()=>AK.user?Math.max(0,Math.min(Math.floor(AK.useAmt||0),AK.w.balan
 AK.placePointsOrder=async o=>{
  busy(1);
  try{const {fn,fns}=await loadFB();
-  await fn.httpsCallable(fns,'placeOrder')({no:o.no,name:o.n,phone:o.p,type:o.t,address:o.a||'',notes:o.nt||'',usePoints:o.up,items:cart.map(x=>({n:String(x.n),v:String(x.v||''),p:+x.p,q:+x.q,x:String(x.x||'').slice(0,200)}))});
+  await fn.httpsCallable(fns,'placeOrder')({
+   no:String(o.no||'').slice(0,40),
+   name:String(o.n||'').trim().slice(0,80),
+   phone:String(o.p||'').trim().slice(0,20),
+   type:o.t,
+   address:String(o.a||'').slice(0,300),
+   notes:String(o.nt||'').slice(0,500),
+   subtotal:+o.s||0,
+   fee:+o.f||0,
+   total:(+o.s||0)+(+o.f||0),
+   usePoints:Math.max(0,Math.floor(+o.up||0)),
+   items:cart.map(x=>({
+    n:String(x.n||'').slice(0,80),
+    v:String(x.v||'').slice(0,80),
+    p:+x.p||0,
+    q:Math.max(1,Math.floor(+x.q||1)),
+    x:String(x.x||'').slice(0,200)
+   }))
+  });
   AK.useAmt=0;return true;
  }catch(e){console.error(e);msg(errMsg(e),false);return false}
  finally{busy(0)}
