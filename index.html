@@ -741,6 +741,46 @@ header .hr .ib{width:40px;height:40px}
 .admin-brand b{font-size:17px!important;line-height:1.3}
 @media(min-width:601px){.admin-topbar{padding-left:62px!important}}
 </style>
+<style>
+/* ===== المحفظة + القائمة الجانبية (v3) ===== */
+.ak-avatar{overflow:hidden}
+.ak-burger{display:none;width:44px;height:44px;border-radius:12px;border:1px solid #e3e5e8;background:#fff;font-size:21px;cursor:pointer;place-items:center;flex:none}
+.ak-scrim{display:none}
+.wl-hero{background:linear-gradient(135deg,#a61e22,#4a0d10);color:#fff;border-radius:20px;padding:24px;position:relative;overflow:hidden;box-shadow:0 10px 28px #a61e2240;animation:wlIn .45s both}
+.wl-hero::after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:#ffffff14;left:-50px;top:-70px}
+.wl-hero small{opacity:.85}.wl-bal{font-size:2.6rem;font-weight:800;line-height:1.2;margin:4px 0}
+.wl-egp{display:inline-block;background:#ffffff26;border-radius:20px;padding:4px 14px;font-weight:700}
+.wl-rate{margin-top:12px;font-size:.85rem;opacity:.9}
+.wl-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.wl-mini div{background:#fff;border:1px solid #e4e7ed;border-radius:14px;padding:12px;text-align:center;color:#273142}
+.wl-mini b{display:block;font-size:1.3rem}.wl-mini small{color:#737d8c}
+.wl-tx{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #edf0f4;animation:wlIn .35s both}
+.wl-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;flex:none}
+.wl-ic.p{background:#e6f6ec}.wl-ic.n{background:#fdeaea}
+.wl-tm{flex:1;min-width:0;display:flex;flex-direction:column;color:#273142}.wl-tm small{color:#737d8c;line-height:1.6}
+.wl-am{font-size:1.05rem;white-space:nowrap}.wl-am.p{color:#1f9d4d}.wl-am.n{color:#c0392b}
+.wl-av{display:flex;align-items:center;gap:14px;margin:6px 0 12px}.wl-av .ak-avatar{width:72px;height:72px;font-size:2rem}
+@keyframes wlIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pt-box{background:#fff8ec;border:1px dashed #d4a63a;border-radius:14px;padding:10px 12px;margin:10px 0;color:#241a16}
+.pt-box label.pt-on{display:flex;gap:8px;align-items:center;margin:0;color:#241a16;font-weight:700}.pt-box input[type=checkbox]{width:auto}
+.pt-row{display:flex;gap:8px;margin-top:8px}.pt-row input{flex:1}
+.wa-box{display:grid;gap:8px;background:#faf7f3;border:1px solid var(--ln);border-radius:14px;padding:12px;margin:10px 0}
+.wa-row{display:flex;gap:8px}.wa-row .btn{flex:1}.wa-res{max-height:240px;overflow:auto}
+.wa-user{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:right;border:1px solid var(--ln);background:#fff;border-radius:10px;padding:9px 12px;margin:5px 0;cursor:pointer;color:inherit}
+.wa-user.on{border-color:var(--gold);background:#fff8ec}.wa-user small{color:var(--mu)}
+@media(max-width:760px){
+ #account .ak-dashboard{grid-template-columns:minmax(0,1fr)!important;background:#f4f5f7!important}
+ #account .ak-dashboard .ak-side{position:fixed!important;top:0!important;right:0!important;left:auto!important;bottom:0!important;height:100dvh!important;width:min(290px,84vw)!important;margin:0!important;padding:22px 14px!important;flex-direction:column!important;align-items:stretch!important;overflow-y:auto!important;background:#24272d!important;transform:translateX(106%);transition:transform .28s ease;z-index:40;box-shadow:-10px 0 30px #0006}
+ #account .ak-dashboard.menu-open .ak-side{transform:none}
+ #account .ak-dashboard .ak-brand,#account .ak-dashboard .ak-side-title{display:block!important}
+ #account .ak-dashboard .ak-nav,#account .ak-dashboard .ak-logout{width:100%!important;padding:12px 14px!important;font-size:15px!important}
+ #account .ak-dashboard .ak-nav span{max-width:none!important}
+ #account .ak-dashboard .ak-logout{margin-top:auto!important}
+ .ak-dashboard.menu-open .ak-scrim{display:block;position:fixed;inset:0;background:#0007;z-index:39}
+ .ak-burger{display:grid}
+ .wl-bal{font-size:2.2rem}
+}
+</style>
 </head>
 <body>
 <div id="note" style="display:none"></div>
@@ -756,7 +796,7 @@ header .hr .ib{width:40px;height:40px}
 <div class="bn"><button onclick="scrollTo(0,0)"><span class="i">🏠</span>الرئيسية</button><button onclick="document.getElementById('q').scrollIntoView({behavior:'smooth',block:'center'})"><span class="i">☰</span>المنيو</button><button onclick="openS('cart')" class=""><span class="i">🛒</span><span id="cnt" style="display: none;">0</span>السلة</button></div>
 <div id="toast" class="">الرابط غير متاح حاليًا</div>
 
-<div class="sheet" id="cart"><div class="box"><button class="x pop" onclick="closeS('cart')">✕</button><h2 style="margin-top:0">سلة المشتريات</h2><div id="lines"></div><div id="sum"></div>
+<div class="sheet" id="cart"><div class="box"><button class="x pop" onclick="closeS('cart')">✕</button><h2 style="margin-top:0">سلة المشتريات</h2><div id="lines"></div><div id="sum"></div><div id="ptsBox"></div>
 <button class="btn gold" id="chk" style="width:100%;margin-top:10px;display:none">إتمام الطلب</button>
 <div id="form" style="display: none;">
 <label>الاسم</label><input id="fn" autocomplete="name">
@@ -781,31 +821,34 @@ header .hr .ib{width:40px;height:40px}
 <div class="sheet" id="account"><div class="box account-box"><button class="x" onclick="closeS('account')" aria-label="إغلاق">✕</button>
 <div class="ak-dashboard">
  <aside class="ak-side"><div class="ak-brand">🍴 أبو كريم الحاتي</div><div class="ak-side-title">حسابي الشخصي</div>
-  <button class="ak-nav on" data-view="profile">⌂ <span>حسابي الشخصي</span></button>
-  <button class="ak-nav" data-view="orders">▤ <span>تتبع الطلبات</span></button>
-  <button class="ak-nav" data-view="history">▧ <span>تاريخ الطلبات</span></button>
-  <button class="ak-nav" data-view="addresses">♧ <span>العناوين المحفوظة</span></button>
-  <button class="ak-nav" data-view="points">♙ <span>نقاط الولاء</span></button>
-  <button class="ak-nav" data-view="support" onclick="closeS('account');openS('ct')">☏ <span>الدعم والمساعدة</span></button>
-  <button class="ak-logout" id="authLogout" type="button">↪ تسجيل الخروج</button>
+   <button class="ak-nav on" data-view="profile">⌂ <span>الرئيسية</span></button>
+   <button class="ak-nav" data-view="points">💰 <span>محفظتي</span></button>
+   <button class="ak-nav" data-view="orders">🧾 <span>طلباتي</span></button>
+   <button class="ak-nav" data-view="edit">👤 <span>الملف الشخصي</span></button>
+   <button class="ak-nav" data-view="settings">⚙ <span>الإعدادات</span></button>
+   <button class="ak-nav" data-view="support" onclick="closeS('account');openS('ct')">☏ <span>الدعم والمساعدة</span></button>
+   <button class="ak-logout" id="authLogout" type="button">↪ تسجيل الخروج</button>
  </aside>
- <main class="ak-main"><div class="ak-top"><div><b>أهلاً بيك، <span id="authDisplayName"></span></b><small id="authEmailShow">عضو مميز • نشط</small></div><div class="ak-top-icons"><span>🔔</span><span>🛒</span></div></div>
+ <div class="ak-scrim" id="akScrim"></div><main class="ak-main"><div class="ak-top"><button class="ak-burger" id="akBurger" type="button" aria-label="القائمة">☰</button><div><b>أهلاً بيك، <span id="authDisplayName"></span></b><small id="authEmailShow">عضو مميز • نشط</small></div><div class="ak-top-icons"><span>🔔</span><span>🛒</span></div></div>
   <div id="authGuest"><div class="auth-tabs"><button type="button" id="authLoginTab" class="on">تسجيل الدخول</button><button type="button" id="authSignupTab">إنشاء حساب</button></div>
    <form id="authForm" novalidate onsubmit="return false"><div id="authNameWrap" hidden><label for="authName">الاسم</label><input id="authName" autocomplete="name" maxlength="60" placeholder="اكتب اسمك"><label for="authPhone">رقم الهاتف</label><input id="authPhone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" maxlength="20" placeholder="01xxxxxxxxx"></div>
     <label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" autocomplete="email" inputmode="email" dir="ltr" placeholder="name@example.com" required><label for="authPassword">كلمة المرور</label><div class="pw-wrap"><input id="authPassword" type="password" autocomplete="current-password" minlength="6" dir="ltr" placeholder="6 أحرف على الأقل" required><button type="button" class="pw-eye" id="authPwToggle" aria-label="إظهار كلمة المرور">👁</button></div><div id="authPw2Wrap" hidden><label for="authPassword2">تأكيد كلمة المرور</label><input id="authPassword2" type="password" autocomplete="new-password" dir="ltr" placeholder="أعد كتابة كلمة المرور"></div><div class="err" id="authError" role="alert"></div><button class="btn" id="authSubmit" type="submit" style="width:100%">دخول</button><button type="button" class="auth-forgot" id="authForgot">نسيت كلمة المرور؟</button></form><div class="auth-or"><span>أو</span></div><button type="button" class="auth-google" id="authGoogle"><span class="google-ico"><svg class="google-g" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" aria-hidden="true" focusable="false"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></span><span>المتابعة باستخدام Google</span></button><p class="auth-google-note">سجّل الدخول أو أنشئ حسابًا جديدًا باستخدام حساب Google الخاص بك.</p>
   </div>
   <div id="authUser" hidden>
    <div class="ak-view" id="akProfileView">
-    <div class="ak-summary-grid"><section class="ak-card ak-user-card"><div class="ak-avatar">👤</div><div class="ak-user-info"><h3 id="akName">حساب العميل</h3><p id="akPhone"></p><p id="akEmail"></p><button class="ak-outline" type="button" data-view="edit">✎ تعديل البيانات</button></div></section>
-     <section class="ak-card ak-points"><b>نقاط الولاء</b><strong>0 نقطة</strong><p>تابع طلباتك واستمتع بمميزات أبو كريم الحاتي</p><button type="button" class="ak-outline" data-view="points">استكشف المميزات ♧</button></section></div>
+    <div class="ak-summary-grid"><section class="ak-card ak-user-card"><div class="ak-avatar" id="akAvatar">👤</div><div class="ak-user-info"><h3 id="akName">حساب العميل</h3><p id="akPhone"></p><p id="akEmail"></p><button class="ak-outline" type="button" data-view="edit">✎ تعديل البيانات</button></div></section>
+     <section class="ak-card ak-points"><b>رصيد محفظتي</b><strong><span id="akPts">0</span> نقطة</strong><p>= <span id="akPtsEgp">0</span> جنيه مصري • <span id="akOrdCount">0</span> طلب</p><button type="button" class="ak-outline" data-view="points">فتح المحفظة 💰</button></section></div>
     <div class="ak-section-title">تتبع الطلبات النشطة</div><div class="ak-active-grid"><section class="ak-card ak-active"><div class="ak-row"><b>الطلب النشط حالياً</b><span id="akActiveNo">لا يوجد طلب نشط</span></div><div id="akActiveContent" class="ak-empty">طلباتك الحالية ستظهر هنا بمجرد تسجيلها.</div></section><section class="ak-card ak-items"><b>تفاصيل الطلب</b><div id="akActiveItems" class="ak-empty">لا توجد تفاصيل حالياً</div></section></div>
     <div class="ak-lower-grid"><section class="ak-card"><div class="ak-row"><b>تاريخ الطلبات السابقة</b><button class="ak-text-btn" data-view="history">عرض الكل</button></div><div id="akRecentOrders" class="ak-empty">جارٍ تحميل الطلبات…</div></section><section class="ak-card"><div class="ak-row"><b>العناوين المحفوظة</b><button class="ak-text-btn" data-view="addresses">إدارة</button></div><div id="akAddressPreview" class="ak-address">🏠 <span>أضف عنوان التوصيل من بياناتك الشخصية</span></div></section></div>
    </div>
-   <div class="ak-view" id="akHistoryView" hidden><section class="ak-card"><h3>تاريخ الطلبات السابقة</h3><div id="ordPane"></div></section></div>
-   <div class="ak-view" id="akOrdersView" hidden><section class="ak-card"><h3>تتبع الطلبات</h3><div id="akOrdersContent" class="ak-empty">جارٍ تحميل الطلبات…</div></section></div>
+   <div class="ak-view" id="akOrdersView" hidden><section class="ak-card"><h3>طلباتي الحالية</h3><div id="akOrdersContent" class="ak-empty">جارٍ تحميل الطلبات…</div></section><section class="ak-card" style="margin-top:12px"><h3>الطلبات السابقة</h3><div id="ordPane"></div></section></div>
    <div class="ak-view" id="akAddressesView" hidden><section class="ak-card"><h3>العناوين المحفوظة</h3><div id="akAddressFull"></div><button class="btn" type="button" data-view="edit">✎ تعديل بيانات العنوان</button></section></div>
-   <div class="ak-view" id="akPointsView" hidden><section class="ak-card ak-points-page"><h3>نقاط الولاء</h3><strong>0 نقطة</strong><p>نظام نقاط الولاء قيد التجهيز في أبو كريم الحاتي.</p></section></div>
-   <div class="ak-view" id="akEditView" hidden><section class="ak-card"><h3>بياناتي الشخصية</h3><div class="ak-form-grid"><div><label for="pfName">الاسم</label><input id="pfName" maxlength="60"></div><div><label for="pfPhone">رقم الهاتف</label><input id="pfPhone" type="tel" dir="ltr" maxlength="20"></div><div class="ak-full"><label for="pfAddr">العنوان (للتوصيل)</label><textarea id="pfAddr" rows="3" maxlength="200"></textarea></div></div><div class="err" id="pfErr" role="alert"></div><button class="btn" id="pfSave" type="button" style="width:100%">💾 حفظ البيانات</button><button class="btn line2" id="pfPw" type="button" style="width:100%;margin-top:8px">🔑 إرسال رابط تغيير كلمة المرور</button><div class="dz"><label id="delAccLabel" for="delPw">حذف حسابي نهائيًا (أعد تأكيد هويتك)</label><input id="delPw" type="password" dir="ltr" autocomplete="current-password" placeholder="كلمة المرور للتأكيد"><button class="btn line2" id="delAcc" type="button" style="width:100%;margin-top:6px">🗑 حذف الحساب</button></div></section></div>
+   <div class="ak-view" id="akPointsView" hidden>
+     <div class="wl-hero"><small>رصيد محفظتي</small><div class="wl-bal"><span id="wlBal">0</span> نقطة</div><span class="wl-egp">= <span id="wlEgp">0</span> جنيه مصري</span><div class="wl-rate">🎁 كل نقطة = 1 جنيه • تُخصم تلقائيًا عند الدفع بها في السلة</div></div>
+     <div class="wl-mini"><div><b id="wlEarned">0</b><small>إجمالي ما حصلت عليه</small></div><div><b id="wlSpent">0</b><small>إجمالي ما استخدمته</small></div></div>
+     <section class="ak-card"><h3>سجل الإضافات والخصومات</h3><div id="wlList"></div></section></div>
+   <div class="ak-view" id="akEditView" hidden><section class="ak-card"><h3>الملف الشخصي</h3><div class="wl-av"><div class="ak-avatar" id="akAvatar2">👤</div><label class="btn line2 sm" style="cursor:pointer">📷 تغيير الصورة<input id="pfPhoto" type="file" accept="image/*" hidden></label></div><div class="ak-form-grid"><div><label for="pfName">الاسم</label><input id="pfName" maxlength="60"></div><div><label for="pfPhone">رقم الهاتف</label><input id="pfPhone" type="tel" dir="ltr" maxlength="20"></div><div class="ak-full"><label for="pfEmail">البريد الإلكتروني</label><input id="pfEmail" dir="ltr" readonly></div><div class="ak-full"><label for="pfAddr">العنوان (للتوصيل)</label><textarea id="pfAddr" rows="3" maxlength="200"></textarea></div></div><div class="err" id="pfErr" role="alert"></div><button class="btn" id="pfSave" type="button" style="width:100%">💾 حفظ البيانات</button></section></div>
+    <div class="ak-view" id="akSettingsView" hidden><section class="ak-card"><h3>الإعدادات</h3><p class="mut">إعدادات الحساب والأمان</p><button class="btn line2" id="pfPw" type="button" style="width:100%;margin-top:8px">🔑 إرسال رابط تغيير كلمة المرور</button><button class="btn line2" id="akSetLogout" type="button" style="width:100%;margin-top:8px">↪ تسجيل الخروج</button><div class="dz"><label id="delAccLabel" for="delPw">حذف حسابي نهائيًا (أعد تأكيد هويتك)</label><input id="delPw" type="password" dir="ltr" autocomplete="current-password" placeholder="كلمة المرور للتأكيد"><button class="btn line2" id="delAcc" type="button" style="width:100%;margin-top:6px">🗑 حذف الحساب</button></div></section></div>
    <div id="verBox" class="ver" hidden>⚠️ بريدك الإلكتروني غير مُفعّل بعد. افتح رسالة التفعيل التي أرسلناها لك (راجع الرسائل غير المرغوبة أيضًا).<div class="row"><button class="btn sm2" id="verSend" type="button">إعادة إرسال الرسالة</button><button class="btn sm2 line2" id="verRefresh" type="button">فعّلت بريدي — تحديث</button></div></div>
    <button class="btn gold" id="openAdm" type="button" style="width:100%;margin:10px 0" hidden>🛡️ فتح لوحة الإدارة</button>
   </div>
@@ -869,6 +912,7 @@ function renderCart(){
 function sums(){
  const s=sub(),f=fee();
  $('#sum').innerHTML=cart.length?`<div class="tot"><span>إجمالي الحساب</span><span>${s} ج.م</span></div><div class="tot"><span>التوصيل</span><span>${f?f+' ج.م':'—'}</span></div><div class="tot fin"><span>الإجمالي النهائي</span><span>${s+f} ج.م</span></div>`:'';
+ if(window.ptsCart)window.ptsCart(s+f);
 }
 $('#ft').addEventListener('change',sums);
 $('#lines').addEventListener('click',e=>{
@@ -895,8 +939,12 @@ $('#send').addEventListener('click',()=>{
  m+=`\n*الأصناف:*\n`+cart.map(x=>`- ${x.n}${x.v?' ('+x.v+')':''} × ${x.q} = ${x.p*x.q} ج.م (${x.p} ج.م للواحد)${x.x?'\n  ملاحظة: '+x.x:''}`).join('\n');
  m+=`\n\nإجمالي الطلب: ${s} ج.م\n`+(f?`التوصيل: ${f} ج.م\n`:'')+`*الإجمالي النهائي: ${s+f} ج.م*`;
  const nt=$('#fx').value.trim();if(nt)m+=`\n\nملاحظات العميل: ${nt}`;
- if(window.AK&&AK.saveOrder)AK.saveOrder({no,n,p,t,a,f,s,nt});
- go(w,m);
+  const up=(window.AK&&AK.walletUse&&AK.walletUse())||0;
+  if(up>0){m+=`\n\nالدفع من المحفظة: ${up} نقطة = ${up} ج.م\n*المتبقي للدفع: ${s+f-up} ج.م*`;
+   const sb=$('#send');sb.disabled=true;
+   AK.placePointsOrder({no,n,p,t,a,f,s,nt,up}).then(ok=>{sb.disabled=false;if(ok)go(w,m)});return}
+  if(window.AK&&AK.saveOrder)AK.saveOrder({no,n,p,t,a,f,s,nt});
+  go(w,m);
 });
 
 
@@ -999,8 +1047,8 @@ const CFG={apiKey:"AIzaSyC7B8_Z00RDGGcnpmdV6WzsT_GtNRPt3Cs",authDomain:"ak12-bd1
 const MAIN_ADMIN='bb3065339@gmail.com'; // للعرض فقط — الصلاحية الفعلية تُفرض في قواعد Firestore
 const V='11.0.2';
 const SOURCES=[
- ['app','auth','firestore'].map(n=>`https://www.gstatic.com/firebasejs/${V}/firebase-${n}.js`),
- ['app','auth','firestore'].map(n=>`https://cdn.jsdelivr.net/npm/firebase@${V}/${n}/+esm`)
+ ['app','auth','firestore','functions'].map(n=>`https://www.gstatic.com/firebasejs/${V}/firebase-${n}.js`),
+ ['app','auth','firestore','functions'].map(n=>`https://cdn.jsdelivr.net/npm/firebase@${V}/${n}/+esm`)
 ];
 const SET_KEYS=['phone','fee','phones','pw','fb','ig','tt','addr','map','note'];
 const DEF=JSON.parse(JSON.stringify(D));            // المنيو والإعدادات الافتراضية المدمجة في الملف
@@ -1016,10 +1064,10 @@ function loadFB(){
  if(FBP)return FBP;
  FBP=(async()=>{let last;
   for(const s of SOURCES){try{
-   const [a,au,fs]=await Promise.all(s.map(u=>import(u)));
-   const app=a.initializeApp(CFG),auth=au.getAuth(app),db=fs.getFirestore(app);
+   const [a,au,fs,fn]=await Promise.all(s.map(u=>import(u)));
+   const app=a.initializeApp(CFG),auth=au.getAuth(app),db=fs.getFirestore(app),fns=fn.getFunctions(app,'us-central1');
    try{await au.setPersistence(auth,au.browserLocalPersistence)}catch(e){}
-   return{a,au,fs,auth,db};
+   return{a,au,fs,fn,auth,db,fns};
   }catch(e){last=e;console.error(e)}}
   FBP=null;throw last||new Error('load-failed');
  })();
@@ -1031,7 +1079,7 @@ let bz=0;const busy=on=>{bz=Math.max(0,bz+(on?1:-1));$i('busy').classList.toggle
 function msg(t,ok=true){const e=$i('toast');e.textContent=(ok?'✓ ':'⚠ ')+t;e.classList.toggle('bad',!ok);e.classList.add('on');clearTimeout(window._mt);window._mt=setTimeout(()=>e.classList.remove('on'),ok?2600:4200)}
 const MSG={'auth/email-already-in-use':'البريد الإلكتروني مستخدم بالفعل. جرّب تسجيل الدخول.','auth/invalid-email':'البريد الإلكتروني غير صحيح.','auth/missing-password':'اكتب كلمة المرور.','auth/weak-password':'كلمة المرور ضعيفة؛ استخدم 6 أحرف على الأقل.','auth/invalid-credential':'البريد الإلكتروني أو كلمة المرور غير صحيحة.','auth/invalid-login-credentials':'البريد الإلكتروني أو كلمة المرور غير صحيحة.','auth/user-not-found':'لا يوجد حساب بهذا البريد الإلكتروني.','auth/wrong-password':'كلمة المرور غير صحيحة.','auth/user-disabled':'هذا الحساب موقوف. تواصل مع المطعم.','auth/too-many-requests':'محاولات كثيرة. حاول مرة أخرى لاحقًا.','auth/network-request-failed':'تعذر الاتصال بالإنترنت. حاول مرة أخرى.','auth/operation-not-allowed':'تسجيل الدخول بالبريد وكلمة المرور غير مفعّل في Firebase (Authentication ← Sign-in method ← Email/Password).','auth/unauthorized-domain':'هذا الدومين غير مضاف في Firebase (Authentication ← Settings ← Authorized domains).','auth/requires-recent-login':'لأسباب أمنية سجّل الخروج وادخل من جديد ثم أعد المحاولة.','auth/operation-not-supported-in-this-environment':'افتح الموقع من رابط الاستضافة (https) وليس من الملف مباشرة.','auth/configuration-not-found':'خدمة Authentication غير مفعّلة في مشروع Firebase.','permission-denied':'ليس لديك صلاحية لهذه العملية. (تأكد من نشر قواعد Firestore، وأن بريدك مُفعّل)','unavailable':'تعذر الاتصال بقاعدة البيانات. حاول مرة أخرى.','not-found':'قاعدة بيانات Firestore غير مُنشأة في المشروع بعد.','failed-precondition':'قاعدة بيانات Firestore غير جاهزة بعد.'};
 const LOADFAIL='تعذر تحميل خدمة Firebase. تأكد من اتصال الإنترنت (وأن الموقع غير محجوب) ثم حدّث الصفحة.';
-const errMsg=e=>e&&e.message==='load-failed'?LOADFAIL:(MSG[e&&e.code]||MSG[String(e&&e.code||'').replace('firestore/','')]||('تعذر إكمال العملية ('+((e&&(e.code||e.message))||'خطأ غير معروف')+')'));
+const errMsg=e=>e&&e.message==='load-failed'?LOADFAIL:(e&&String(e.code||'').startsWith('functions/')&&e.code!=='functions/internal'&&e.message)?e.message:(MSG[e&&e.code]||MSG[String(e&&e.code||'').replace('firestore/','')]||('تعذر إكمال العملية ('+((e&&(e.code||e.message))||'خطأ غير معروف')+')'));
 async function run(fn,ok){const act=window._act;window._act=null;busy(1);try{await fn();if(ok)msg(ok);if(act)logAct(act);return true}catch(e){console.error(e);msg(errMsg(e),false);return false}finally{busy(0)}}
 const validEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 const validPhone=v=>!v||/^\+?[0-9٠-٩\s-]{10,15}$/.test(v);
@@ -1089,7 +1137,7 @@ async function onUser(u){
  if(!AK.isMain){try{AK.isAdmin=(await fs.getDoc(fs.doc(db,'admins',u.uid))).exists()}catch(e){}}
  showUser();
 }
-function showGuest(){$i('authGuest').hidden=false;$i('authUser').hidden=true;$i('accountBtn').classList.remove('in');$i('accountBtn').setAttribute('aria-label','الحساب');if($i('adm').classList.contains('open'))closeS('adm')}
+function showGuest(){unwatchWallet();$i('authGuest').hidden=false;$i('authUser').hidden=true;$i('accountBtn').classList.remove('in');$i('accountBtn').setAttribute('aria-label','الحساب');if($i('adm').classList.contains('open'))closeS('adm')}
 function showUser(){
  const u=AK.user,p=AK.profile||{};
  $i('authGuest').hidden=true;$i('authUser').hidden=false;
@@ -1101,7 +1149,7 @@ function showUser(){
  $i('pfName').value=p.name||'';$i('pfPhone').value=p.phone||'';$i('pfAddr').value=p.address||'';
  $i('akName').textContent=p.name||u.displayName||(u.email||'').split('@')[0];$i('akPhone').textContent=p.phone||'لم يتم إضافة رقم هاتف';$i('akEmail').textContent=u.email||'';$i('akAddressPreview').innerHTML='🏠 <span>'+(p.address?esc(p.address):'أضف عنوان التوصيل من بياناتك الشخصية')+'</span>';$i('akAddressFull').textContent=p.address||'لا يوجد عنوان محفوظ. أضف عنوانك من تعديل البيانات.';
  $i('accountBtn').classList.add('in');$i('accountBtn').setAttribute('aria-label','حسابي — '+(p.name||''));
- loadMyOrders();
+ userCard();watchWallet();loadMyOrders();
  [['fn',p.name],['fp',p.phone],['fa',p.address]].forEach(([id,v])=>{const e=$i(id);if(e&&!e.value&&v)e.value=v});
 }
 window.sideExtra=()=>`<a href="#" onclick="closeS('side');openS('account');return false">👤 ${AK.user?'حسابي':'تسجيل الدخول / إنشاء حساب'}</a><a href="#" onclick="closeS('side');openS('ct');return false">📞 تواصل معنا</a>${AK.isAdmin?'<a href="#" onclick="closeS(\'side\');openS(\'adm\');return false">🛡️ لوحة الإدارة</a>':''}`;
@@ -1160,7 +1208,7 @@ $i('verRefresh').onclick=()=>run(async()=>{const {auth}=await loadFB();await aut
 $i('openAdm').onclick=()=>{closeS('account');openS('adm')};
 
 
-function akView(name){const map={profile:'akProfileView',history:'akHistoryView',orders:'akOrdersView',addresses:'akAddressesView',points:'akPointsView',edit:'akEditView'};Object.values(map).forEach(id=>{const e=$i(id);if(e)e.hidden=true});const target=$i(map[name]||map.profile);if(target)target.hidden=false;document.querySelectorAll('.ak-nav').forEach(b=>b.classList.toggle('on',b.dataset.view===name));if(name==='history'||name==='orders')loadMyOrders();}
+function akView(name){const map={profile:'akProfileView',history:'akOrdersView',settings:'akSettingsView',orders:'akOrdersView',addresses:'akAddressesView',points:'akPointsView',edit:'akEditView'};Object.values(map).forEach(id=>{const e=$i(id);if(e)e.hidden=true});const target=$i(map[name]||map.profile);if(target)target.hidden=false;document.querySelectorAll('.ak-nav').forEach(b=>b.classList.toggle('on',b.dataset.view===name));if(name==='history'||name==='orders')loadMyOrders();if(name==='points')walletUI();const dd=document.querySelector('.ak-dashboard');if(dd)dd.classList.remove('menu-open');}
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>akView(b.dataset.view)));
 $i('pfSave').onclick=()=>{const name=$i('pfName').value.trim(),phone=$i('pfPhone').value.trim(),address=$i('pfAddr').value.trim(),e=$i('pfErr');e.textContent='';
  if(name.length<2)return e.textContent='اكتب الاسم (حرفان على الأقل).';if(!validPhone(phone))return e.textContent='رقم الهاتف غير صحيح.';
@@ -1173,9 +1221,9 @@ $i('delAcc').onclick=()=>{const u=AK.user,isGoogle=(u?.providerData||[]).some(x=
 async function loadMyOrders(){
  const box=$i('ordPane');box.innerHTML='<p class="empty">جارٍ التحميل…</p>';
  try{const {fs,db}=await loadFB();const s=await fs.getDocs(fs.query(fs.collection(db,'orders'),fs.where('uid','==',AK.user.uid)));
-  const o=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>ms(b.createdAt)-ms(a.createdAt));
+  const o=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>ms(b.createdAt)-ms(a.createdAt));if($i('akOrdCount'))$i('akOrdCount').textContent=o.length;
   const active=o.filter(x=>!['done','delivered','completed','cancel','cancelled','canceled'].includes(String(x.status||'').toLowerCase()));
-  const render=x=>`<div class=\"ordc\"><div class=\"row\"><b>طلب #${esc(x.no||x.id)}</b><span class=\"stt ${(ST[x.status]||ST.new)[1]}\">${(ST[x.status]||ST.new)[0]}</span></div><small>${fdate(x.createdAt)} — ${x.type==='d'?'دليفري':'استلام'} — الإجمالي ${+x.total||0} ج.م</small><small>${(x.items||[]).map(i=>esc(i.n)+(i.v?' ('+esc(i.v)+')':'')+' ×'+(+i.q||1)).join('، ')}</small></div>`;
+  const render=x=>`<div class=\"ordc\"><div class=\"row\"><b>طلب #${esc(x.no||x.id)}</b><span class=\"stt ${(ST[x.status]||ST.new)[1]}\">${(ST[x.status]||ST.new)[0]}</span></div><small>${fdate(x.createdAt)} — ${x.type==='d'?'دليفري':'استلام'} — الإجمالي ${+x.total||0} ج.م${x.pointsUsed?' — مدفوع من المحفظة '+x.pointsUsed+' ج.م':''}</small><small>${(x.items||[]).map(i=>esc(i.n)+(i.v?' ('+esc(i.v)+')':'')+' ×'+(+i.q||1)).join('، ')}</small></div>`;
   const empty='<p class=\"empty\">لا توجد طلبات مسجّلة على حسابك بعد.</p>';
   box.innerHTML=o.length?o.map(render).join(''):empty;
   $i('akRecentOrders').innerHTML=o.length?o.slice(0,2).map(render).join(''):empty;
@@ -1200,7 +1248,7 @@ window._act=null;AK.onOpen=i=>{if(i==='adm')admOpen()};
 const adm=()=>$i('admc');
 async function admOpen(){
  if(!AK.user||!AK.isAdmin){closeS('adm');msg('هذه اللوحة مخصصة للإدارة فقط.',false);return}
- A.set=pickSet(D);adm().innerHTML='<p class="empty">جارٍ تحميل بيانات الإدارة…</p>';A.err={};
+ A.w.loaded=false;A.set=pickSet(D);adm().innerHTML='<p class="empty">جارٍ تحميل بيانات الإدارة…</p>';A.err={};
  try{
   const {fs,db}=await loadFB();
   const g=async(k,q)=>{try{return(await fs.getDocs(q)).docs.map(d=>({id:d.id,...d.data()}))}catch(e){A.err[k]=e;return[]}};
@@ -1213,7 +1261,8 @@ async function admOpen(){
 const fld=(l,id,v,o={})=>`<div class="af"><label>${l}</label><input ${o.t?`type="${o.t}"`:''} data-f="${id}" ${o.d?`data-id="${o.d}"`:''} dir="${o.dir||'auto'}" value="${esc(v??'')}" ${o.ph?`placeholder="${o.ph}"`:''}>${o.h?`<small>${o.h}</small>`:''}</div>`;
 function admRender(){
  const T=[['stats','📊','الرئيسية'],['orders','🧾','الطلبات'],['users','👥','المستخدمون'],['menu','🍽️','المنيو'],['set','⚙️','الإعدادات'],['logs','📜','السجل']];
- if(AK.isMain)T.push(['admins','🛡️','الصلاحيات']);
+ T.splice(3,0,['wallet','💰','إدارة النقاط والمحافظ']);
+  if(AK.isMain)T.push(['admins','🛡️','الصلاحيات']);
  const errs=Object.keys(A.err).map(k=>`<div class="ac"><span class="errmsg">⚠ ${k==='site'?'المحتوى':k==='users'?'المستخدمون':k==='orders'?'الطلبات':k==='logs'?'السجل':'الصلاحيات'}: ${esc(errMsg(A.err[k]))}</span></div>`).join('');
  const pending=A.orders.filter(x=>(x.status||'new')==='new').length;
  const tab=T.find(t=>t[0]===A.tab);
@@ -1224,7 +1273,7 @@ function admRender(){
  <section class="admin-main"><header class="admin-topbar"><div><small>لوحة التحكم / ${tab?.[2]||'الرئيسية'}</small><h2>${A.tab==='stats'?'أهلاً بك في لوحة التحكم':(tab?.[2]||'لوحة الإدارة')}</h2></div><div class="admin-top-user"><span>👤</span><div><b>${esc(AK.user?.displayName||AK.user?.email||'المدير')}</b><small>مدير النظام</small></div><button data-x="reload" title="تحديث">↻</button></div></header>
  <main class="admin-content"><div class="admin-heading"><div><h1>${A.tab==='stats'?'نظرة عامة':(tab?.[2]||'')}</h1><p>تابع أداء المطعم وأدر جميع التفاصيل من مكان واحد</p></div><span>${new Date().toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</span></div>
  ${pending&&A.tab!=='orders'?`<button class="admin-alert" data-x="tab" data-t="orders">🔔 لديك ${pending} طلب جديد يحتاج إلى المراجعة — عرض الطلبات</button>`:''}
- ${errs}<div class="admin-tab-content">${({stats:tStats,orders:tOrders,users:tUsers,menu:tMenu,set:tSet,logs:tLogs,admins:tAdmins})[A.tab]()}</div></main></section></div>`;
+ ${errs}<div class="admin-tab-content">${({stats:tStats,orders:tOrders,users:tUsers,menu:tMenu,set:tSet,logs:tLogs,admins:tAdmins,wallet:tWallet})[A.tab]()}</div></main></section></div>`;
 }
 function tLogs(){return A.logs.length?`<section class="ac"><h3>📜 سجل العمليات الإدارية</h3>${A.logs.map(l=>`<div class="logr"><b>${esc(l.act)}</b><br><small class="mut" dir="ltr">${esc(l.by)} — ${fdate(l.at)}</small></div>`).join('')}</section>`:'<p class="empty">لا توجد عمليات مسجّلة بعد.</p>'}
 function tStats(){
@@ -1312,7 +1361,7 @@ adm().addEventListener('click',async e=>{
  const b=e.target.closest('[data-x]');if(!b||b.matches('input,select'))return;const d=b.dataset,id=d.id;const uu=A.users.find(u=>u.id===id);window._act=SENS[d.x]?SENS[d.x]+(uu&&uu.email?' — '+uu.email:''):null;
  const U=()=>A.users.find(u=>u.id===id);
  switch(d.x){
- case 'tab':if(A.tab==='set')syncSet();A.tab=d.t;A.open=null;return admRender();
+ case 'tab':if(A.tab==='set')syncSet();A.tab=d.t;A.open=null;if(d.t==='wallet'&&!A.w.loaded){const tc=adm().querySelector('.admin-tab-content');if(tc)tc.innerHTML='<p class="empty">جارٍ التحميل…</p>';await walletLoad()}return admRender();
  case 'reload':return admOpen();
  case 'cat':A.cat=+d.c;A.open=null;return admRender();
  case 'seed':if(!confirm('نشر المنيو الحالي على قاعدة البيانات؟'))return;return run(async()=>{await seedMenu();await reloadAll()},'تم نشر المنيو — أصبح مشتركًا بين كل الزوار');
@@ -1340,6 +1389,110 @@ adm().addEventListener('click',async e=>{
  case 'addadm':{const em=gv(adm(),'newadm').trim().toLowerCase();if(!validEmail(em))return msg('اكتب بريدًا صحيحًا',false);const u=A.users.find(x=>(x.email||'').toLowerCase()===em);if(!u)return msg('لا يوجد مستخدم مسجّل بهذا البريد',false);
   return run(async()=>{const {fs,db}=await loadFB();await fs.setDoc(fs.doc(db,'admins',u.id),{email:u.email,at:fs.serverTimestamp()});if(!A.admins.some(a=>a.id===u.id))A.admins.push({id:u.id,email:u.email});admRender()},'تمت إضافة المدير')}
  case 'radm':if(!confirm('إزالة صلاحية هذا المدير؟'))return;return run(async()=>{const {fs,db}=await loadFB();await fs.deleteDoc(fs.doc(db,'admins',id));A.admins=A.admins.filter(a=>a.id!==id);admRender()},'تمت إزالة الصلاحية');
+ }
+});
+
+/* ============ المحفظة والنقاط (القراءة فقط من العميل — كل التعديلات من Cloud Functions) ============ */
+const nf=n=>Number(n||0).toLocaleString('ar-EG');
+const TXN={signup:['🎁','مكافأة التسجيل'],admin_add:['➕','إضافة من الإدارة'],admin_deduct:['➖','خصم من الإدارة'],purchase:['🛒','شراء من المحفظة'],refund:['↩️','استرجاع نقاط طلب ملغي']};
+AK.w={balance:0,earned:0,spent:0};AK.tx=[];AK.useAmt=0;
+let wUn=[],wTok=0;
+function unwatchWallet(){wTok++;wUn.forEach(f=>{try{f()}catch(e){}});wUn=[];AK.w={balance:0,earned:0,spent:0};AK.tx=[];AK.useAmt=0}
+async function watchWallet(){
+ unwatchWallet();const my=wTok,uid=AK.user.uid;
+ try{const {fs,db}=await loadFB();if(my!==wTok)return;
+  wUn.push(fs.onSnapshot(fs.doc(db,'wallets',uid),s=>{const d=s.exists()?s.data():{};AK.w={balance:+d.balance||0,earned:+d.earned||0,spent:+d.spent||0};walletUI();welcomeBonus(d)},e=>console.warn('wallet',e)));
+  wUn.push(fs.onSnapshot(fs.query(fs.collection(db,'walletTx'),fs.where('uid','==',uid)),s=>{AK.tx=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>ms(b.createdAt)-ms(a.createdAt));walletUI()},e=>console.warn('walletTx',e)));
+ }catch(e){console.warn(e)}
+}
+function welcomeBonus(d){try{const k='akWB_'+AK.user.uid;if(d.signupBonus&&!localStorage.getItem(k)){localStorage.setItem(k,'1');if(Date.now()-ms(d.createdAt)<6e5)msg('🎁 مبروك! حصلت على 5 نقاط هدية (= 5 جنيه) في محفظتك')}}catch(e){}}
+const txRow=t=>{const m=TXN[t.type]||['•',t.type||'عملية'],pos=(+t.amount||0)>0;return `<div class="wl-tx"><span class="wl-ic ${pos?'p':'n'}">${m[0]}</span><div class="wl-tm"><b>${m[1]}</b>${t.reason&&t.type!=='signup'?`<small>${esc(t.reason)}</small>`:''}${t.orderNo?`<small>طلب #${esc(t.orderNo)}</small>`:''}<small>${fdate(t.createdAt)} • الرصيد بعدها ${nf(t.balanceAfter)} نقطة</small></div><b class="wl-am ${pos?'p':'n'}" dir="ltr">${pos?'+':'−'}${nf(Math.abs(+t.amount||0))}</b></div>`};
+function walletUI(){
+ const b=AK.w.balance,set=(id,v)=>{const e=$i(id);if(e)e.textContent=v};
+ set('akPts',nf(b));set('akPtsEgp',nf(b));set('wlBal',nf(b));set('wlEgp',nf(b));set('wlEarned',nf(AK.w.earned));set('wlSpent',nf(AK.w.spent));
+ const L=$i('wlList');if(L)L.innerHTML=AK.tx.length?AK.tx.map(txRow).join(''):'<p class="empty">لا توجد عمليات على محفظتك بعد.</p>';
+ try{window.ptsCart()}catch(e){}
+}
+function userCard(){
+ const p=AK.profile||{},u=AK.user,ph=p.photo||u.photoURL||'';
+ ['akAvatar','akAvatar2'].forEach(id=>{const e=$i(id);if(e)e.innerHTML=ph?`<img src="${esc(ph)}" alt="" style="width:100%;height:100%;object-fit:cover">`:'👤'});
+ $i('pfEmail').value=u.email||'';
+}
+$i('pfPhoto').onchange=e=>{const f=e.target.files[0];if(!f)return;
+ run(async()=>{const bm=await createImageBitmap(f),k=Math.min(1,160/Math.max(bm.width,bm.height)),cv=document.createElement('canvas');cv.width=Math.round(bm.width*k);cv.height=Math.round(bm.height*k);cv.getContext('2d').drawImage(bm,0,0,cv.width,cv.height);
+  const photo=cv.toDataURL('image/jpeg',.75),{fs,db}=await loadFB();await fs.updateDoc(fs.doc(db,'users',AK.user.uid),{photo,updatedAt:fs.serverTimestamp()});AK.profile={...AK.profile,photo};userCard()},'تم تحديث صورة الحساب');e.target.value=''};
+$i('akBurger').onclick=()=>document.querySelector('.ak-dashboard').classList.toggle('menu-open');
+$i('akScrim').onclick=()=>document.querySelector('.ak-dashboard').classList.remove('menu-open');
+$i('akSetLogout').onclick=()=>$i('authLogout').click();
+
+/* ---------- استخدام الرصيد داخل السلة ---------- */
+window.ptsCart=function(total){
+ const box=$i('ptsBox');if(!box)return;
+ if(total==null)total=sub()+fee();
+ const b=AK.w.balance;
+ if(!AK.user||!cart.length||b<=0||total<=0){AK.useAmt=0;box.innerHTML='';return}
+ const max=Math.min(b,total);AK.useAmt=Math.min(Math.floor(AK.useAmt||0),max);
+ box.innerHTML=`<div class="pt-box"><label class="pt-on"><input type="checkbox" id="ptOn" ${AK.useAmt>0?'checked':''}> 💰 استخدم رصيد محفظتي <b>(${nf(b)} نقطة = ${nf(b)} ج.م)</b></label>${AK.useAmt>0?`<div class="pt-row"><input id="ptAmt" type="number" min="1" max="${max}" step="1" value="${AK.useAmt}" inputmode="numeric"><button type="button" class="btn sm" id="ptMax">الحد الأقصى ${nf(max)}</button></div><div class="tot fin"><span>المتبقي للدفع</span><span>${total-AK.useAmt} ج.م</span></div>`:''}</div>`;
+};
+$i('ptsBox').addEventListener('change',e=>{
+ const t=sub()+fee(),max=Math.min(AK.w.balance,t);
+ if(e.target.id==='ptOn')AK.useAmt=e.target.checked?max:0;
+ if(e.target.id==='ptAmt')AK.useAmt=Math.max(0,Math.min(Math.floor(+e.target.value||0),max));
+ window.ptsCart(t);
+});
+$i('ptsBox').addEventListener('click',e=>{if(e.target.id==='ptMax'){AK.useAmt=Math.min(AK.w.balance,sub()+fee());window.ptsCart()}});
+AK.walletUse=()=>AK.user?Math.max(0,Math.min(Math.floor(AK.useAmt||0),AK.w.balance,sub()+fee())):0;
+AK.placePointsOrder=async o=>{
+ busy(1);
+ try{const {fn,fns}=await loadFB();
+  await fn.httpsCallable(fns,'placeOrder')({no:o.no,name:o.n,phone:o.p,type:o.t,address:o.a||'',notes:o.nt||'',usePoints:o.up,items:cart.map(x=>({n:String(x.n),v:String(x.v||''),p:+x.p,q:+x.q,x:String(x.x||'').slice(0,200)}))});
+  AK.useAmt=0;return true;
+ }catch(e){console.error(e);msg(errMsg(e),false);return false}
+ finally{busy(0)}
+};
+
+/* ---------- لوحة الإدارة: إدارة النقاط والمحافظ ---------- */
+A.w={wallets:{},tx:[],sel:null,selTx:[],q:'',loaded:false,err:null};
+async function walletLoad(){
+ try{const {fs,db}=await loadFB();
+  const [ws,ts]=await Promise.all([fs.getDocs(fs.collection(db,'wallets')),fs.getDocs(fs.query(fs.collection(db,'walletTx'),fs.orderBy('createdAt','desc'),fs.limit(40)))]);
+  A.w.wallets={};ws.docs.forEach(d=>A.w.wallets[d.id]=d.data());A.w.tx=ts.docs.map(d=>({id:d.id,...d.data()}));A.w.loaded=true;A.w.err=null;
+ }catch(e){console.error(e);A.w.err=e}
+}
+async function walletSelLoad(){
+ if(!A.w.sel)return;
+ try{const {fs,db}=await loadFB();const s=await fs.getDocs(fs.query(fs.collection(db,'walletTx'),fs.where('uid','==',A.w.sel)));
+  A.w.selTx=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>ms(b.createdAt)-ms(a.createdAt))}catch(e){console.error(e);A.w.selTx=[]}
+}
+const nameOf=u=>esc(u.name||(u.email||'').split('@')[0]||'عميل');
+function wList(){
+ const q=A.w.q.trim().toLowerCase();
+ const L=A.users.filter(u=>!q||((u.name||'')+' '+(u.email||'')).toLowerCase().includes(q)).slice(0,15);
+ return L.length?L.map(u=>`<button type="button" class="wa-user ${A.w.sel===u.id?'on':''}" data-w="sel" data-id="${u.id}"><span><b>${nameOf(u)}</b><br><small dir="ltr">${esc(u.email||'')}</small></span><b>${nf((A.w.wallets[u.id]||{}).balance)} نقطة</b></button>`).join(''):'<p class="empty">لا يوجد عميل مطابق.</p>';
+}
+function tWallet(){
+ const W=A.w,ws=Object.values(W.wallets),sum=k=>ws.reduce((s,x)=>s+(+x[k]||0),0);
+ const card=(i,n,l)=>`<article class="dash-stat"><span>${i}</span><div><small>${l}</small><b>${nf(n)}</b><em>نقطة</em></div></article>`;
+ const u=W.sel&&A.users.find(x=>x.id===W.sel),bal=u?+((W.wallets[u.id]||{}).balance)||0:0;
+ const err=W.err?`<div class="ac"><span class="errmsg">⚠ ${esc(errMsg(W.err))}</span></div>`:'';
+ const panel=u?`<section class="ac"><h3>💼 محفظة ${nameOf(u)}</h3><small class="mut" dir="ltr">${esc(u.email||'')}</small><div class="tot fin"><span>الرصيد الحالي</span><span>${nf(bal)} نقطة = ${nf(bal)} ج.م</span></div>
+  <div class="wa-box"><div class="af"><label>عدد النقاط</label><input id="wAmt" type="number" min="1" step="1" inputmode="numeric" placeholder="مثال: 10"></div><div class="af"><label>سبب العملية (مطلوب)</label><input id="wWhy" maxlength="200" placeholder="مثال: تعويض عن تأخير الطلب"></div><div class="wa-row"><button class="btn gold2" data-w="add">➕ إضافة نقاط</button><button class="btn danger" data-w="deduct">➖ خصم نقاط</button></div></div>
+  <h3>سجل معاملات العميل</h3>${W.selTx.length?W.selTx.map(t=>txRow(t)+(t.by&&t.by!=='system'?`<small class="mut" dir="ltr" style="display:block;padding:0 54px 6px">بواسطة: ${esc(t.byEmail||t.by)}</small>`:'')).join(''):'<p class="empty">لا توجد معاملات.</p>'}</section>`:'<div class="ac"><p class="empty">اختر عميلًا من القائمة لإدارة رصيده.</p></div>';
+ return `${err}<div class="stg">${card('💰',sum('balance'),'إجمالي النقاط لدى العملاء')}${card('➕',sum('earned'),'إجمالي النقاط المضافة')}${card('➖',sum('spent'),'إجمالي النقاط المخصومة')}</div>
+ <section class="ac"><h3>🔍 البحث عن عميل</h3><input id="wQ" placeholder="ابحث بالاسم أو البريد الإلكتروني" value="${esc(W.q)}"><div class="wa-res" id="wRes">${wList()}</div></section>${panel}
+ <section class="ac"><h3>🕘 أحدث العمليات</h3>${W.tx.length?W.tx.map(t=>{const x=A.users.find(u=>u.id===t.uid);return `<div>${txRow(t)}<small class="mut" style="display:block;padding:0 54px 6px">${x?nameOf(x):esc(t.uid)}${t.by&&t.by!=='system'?' — بواسطة '+esc(t.byEmail||''):''}</small></div>`}).join(''):'<p class="empty">لا توجد عمليات بعد.</p>'}</section>`;
+}
+adm().addEventListener('input',e=>{if(e.target.id==='wQ'){A.w.q=e.target.value;const r=$i('wRes');if(r)r.innerHTML=wList()}});
+adm().addEventListener('click',async e=>{
+ const b=e.target.closest('[data-w]');if(!b)return;const k=b.dataset.w;
+ if(k==='sel'){A.w.sel=b.dataset.id;await walletSelLoad();return admRender()}
+ if(k==='add'||k==='deduct'){
+  const uid=A.w.sel,amt=Math.floor(+$i('wAmt').value),why=$i('wWhy').value.trim(),bal=+((A.w.wallets[uid]||{}).balance)||0;
+  if(!(amt>0))return msg('اكتب عدد نقاط صحيحًا',false);
+  if(why.length<3)return msg('اكتب سبب العملية (3 أحرف على الأقل)',false);
+  if(k==='deduct'&&amt>bal)return msg('لا يمكن خصم أكثر من رصيد العميل ('+bal+')',false);
+  if(!confirm((k==='add'?'إضافة ':'خصم ')+amt+' نقطة؟'))return;
+  run(async()=>{const {fn,fns}=await loadFB();await fn.httpsCallable(fns,'adminAdjustPoints')({uid,amount:amt,op:k,reason:why});await walletLoad();await walletSelLoad();admRender()},k==='add'?'تمت إضافة النقاط':'تم خصم النقاط');
  }
 });
 
