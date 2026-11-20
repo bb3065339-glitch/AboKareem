@@ -3,113 +3,157 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function signedIn() { return request.auth != null; }
+    // التحقق من تسجيل الدخول
+    function signedIn() {
+      return request.auth != null;
+    }
 
+    // المدير الرئيسي
     function mainAdmin() {
       return signedIn()
         && request.auth.token.email == 'bb3065339@gmail.com'
         && request.auth.token.email_verified == true;
     }
 
+    // المديرون الإضافيون
     function isAdmin() {
       return mainAdmin()
-        || (signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
-    }
-
-    function notDeleted() {
-      return signedIn()
-        && !exists(/databases/$(database)/documents/deletedUsers/$(request.auth.uid));
-    }
-
-    function notBlocked() {
-      return signedIn()
-        && (
-          !exists(/databases/$(database)/documents/users/$(request.auth.uid))
-          || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('blocked', false) == false
-        );
-    }
-
-    match /users/{uid} {
-      allow get: if signedIn() && (request.auth.uid == uid || isAdmin());
-      allow list: if isAdmin();
-
-      allow create: if signedIn()
-        && request.auth.uid == uid
-        && notDeleted()
-        && request.resource.data.keys().hasOnly(['name','phone','address','email','createdAt','updatedAt','blocked'])
-        && request.resource.data.get('blocked', false) == false
-        && request.resource.data.email == request.auth.token.email
-        && request.resource.data.name is string
-        && request.resource.data.name.size() <= 60;
-
-      // تعديل: السماح بـ lastLoginAt (التطبيق يكتبه عند كل دخول وكان يُرفض بصمت)
-      allow update: if isAdmin()
         || (
           signedIn()
-          && request.auth.uid == uid
-          && notDeleted()
-          && request.resource.data.diff(resource.data).affectedKeys()
-            .hasOnly(['name','phone','address','updatedAt','lastLoginAt'])
-          && request.resource.data.name is string
-          && request.resource.data.name.size() <= 60
+          && exists(
+            /databases/$(database)/documents/admins/$(request.auth.uid)
+          )
         );
-
-      allow delete: if signedIn() && (request.auth.uid == uid || isAdmin());
     }
 
+    // صاحب الحساب
+    function isOwner(uid) {
+      return signedIn()
+        && request.auth.uid == uid;
+    }
+
+    // التحقق من بيانات إنشاء الحساب
+    function validUserCreate(uid) {
+      return isOwner(uid)
+        && request.resource.data.keys().hasOnly([
+          'name',
+          'phone',
+          'address',
+          'email',
+          'createdAt',
+          'updatedAt',
+          'blocked'
+        ])
+        && request.resource.data.get('blocked', false) == false
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.name is string;
+    }
+
+    // حسابات المستخدمين
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+
+      allow create: if validUserCreate(uid);
+
+      allow update: if isAdmin()
+        || (
+          isOwner(uid)
+          && request.resource.data.diff(resource.data)
+            .affectedKeys()
+            .hasOnly([
+              'name',
+              'phone',
+              'address',
+              'photo',
+              'updatedAt',
+              'lastLoginAt'
+            ])
+        );
+
+      allow delete: if isAdmin();
+    }
+
+    // المديرون
     match /admins/{uid} {
-      allow get: if signedIn() && (request.auth.uid == uid || isAdmin());
-      allow list: if isAdmin();
+      allow read: if isAdmin() || isOwner(uid);
       allow create, update, delete: if mainAdmin();
     }
 
+    // الحسابات المحذوفة
     match /deletedUsers/{uid} {
-      allow get: if signedIn() && (request.auth.uid == uid || isAdmin());
-      allow list, create, update, delete: if isAdmin();
+      allow read: if isOwner(uid) || isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
-    match /adminLogs/{logId} {
-      allow get, list: if isAdmin();
-      allow create: if isAdmin()
-        && request.resource.data.keys().hasOnly(['by','uid','act','at'])
-        && request.resource.data.uid == request.auth.uid
-        && request.resource.data.by == request.auth.token.email
-        && request.resource.data.act is string
-        && request.resource.data.act.size() <= 200
-        && request.resource.data.at == request.time;
+    // الطلبات
+    match /orders/{orderId} {
+      allow create: if
+        request.resource.data.uid == null
+        || (
+          signedIn()
+          && request.resource.data.uid == request.auth.uid
+        );
+
+      allow read: if isAdmin()
+        || (
+          signedIn()
+          && resource.data.uid == request.auth.uid
+        );
+
+      allow update, delete: if isAdmin();
     }
 
-    match /site/{docId} { allow read: if true; allow write: if isAdmin(); }
-    match /cats/{id}    { allow read: if true; allow write: if isAdmin(); }
-
-    match /items/{id} {
+    // إعدادات الموقع
+    match /site/{document} {
       allow read: if true;
-      allow create, update: if isAdmin()
-        && request.resource.data.get('img', '') is string
-        && request.resource.data.get('img', '').size() < 450000;
-      allow delete: if isAdmin();
+      allow write: if isAdmin();
     }
 
-    match /orders/{id} {
-      allow create: if request.resource.data.keys().hasOnly(['no','uid','name','phone','type','address','items','subtotal','fee','total','notes','status','createdAt'])
-        && request.resource.data.status == 'new'
-        && request.resource.data.createdAt == request.time
-        && (
-          request.resource.data.get('uid', null) == null
-          || (signedIn() && request.resource.data.uid == request.auth.uid && notBlocked())
-        )
-        && request.resource.data.name is string
-        && request.resource.data.name.size() <= 80
-        && request.resource.data.items is list
-        && request.resource.data.items.size() > 0
-        && request.resource.data.items.size() <= 60
-        && request.resource.data.total is number
-        && request.resource.data.total >= 0;
+    // أقسام المنيو
+    match /cats/{catId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
 
-      allow get: if signedIn() && (resource.data.get('uid', null) == request.auth.uid || isAdmin());
-      allow list: if signedIn() && (isAdmin() || resource.data.get('uid', null) == request.auth.uid);
-      allow update: if isAdmin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status']);
-      allow delete: if isAdmin();
+    // أصناف المنيو
+    match /items/{itemId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // محافظ العملاء
+    match /wallets/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+
+      // الكتابة من Cloud Functions فقط
+      allow create, update, delete: if false;
+    }
+
+    // سجل معاملات النقاط
+    match /walletTx/{txId} {
+      allow read: if isAdmin()
+        || (
+          signedIn()
+          && resource.data.uid == request.auth.uid
+        );
+
+      // ممنوع التعديل المباشر من المتصفح
+      allow create, update, delete: if false;
+    }
+
+    // سجل عمليات الإدارة
+    match /adminLogs/{logId} {
+      allow read: if isAdmin();
+
+      allow create: if isAdmin()
+        && request.resource.data.uid == request.auth.uid;
+
+      allow update, delete: if false;
+    }
+
+    // منع الوصول لأي مستند غير محدد
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

@@ -896,7 +896,7 @@ let tm;const toast=m=>{const e=$('#toast');e.textContent=m;e.classList.add('on')
 document.addEventListener('click',e=>{
  const b=e.target.closest('[data-add]');
  if(b){const w=b.closest('[data-c]'),it=D.cats[w.dataset.c].items[w.dataset.i],v=+b.dataset.add,k=w.dataset.c+'-'+w.dataset.i+'-'+v,ex=cart.find(x=>x.k===k);
-  if(ex)ex.q++;else cart.push({k,n:it.n,v:it.p.length>1?it.l[v]:'',p:it.p[v],q:1,x:''});
+  if(ex)ex.q++;else cart.push({k,id:it.id||'',n:it.n,v:it.p.length>1?it.l[v]:'',p:it.p[v],q:1,x:''});
   save();count();toast('✓ تمت الإضافة للسلة');return}
  const t=e.target.closest('#nav a');if(t){cur=+t.dataset.t;renderMenu();return}
  const g=e.target.closest('#form .tg button');if(g){$('#ft').value=g.dataset.t;document.querySelectorAll('#form .tg button').forEach(x=>x.classList.toggle('on',x===g));document.querySelectorAll('.ad').forEach(x=>x.style.display=g.dataset.t==='d'?'':'none');sums()}
@@ -1079,7 +1079,8 @@ let bz=0;const busy=on=>{bz=Math.max(0,bz+(on?1:-1));$i('busy').classList.toggle
 function msg(t,ok=true){const e=$i('toast');e.textContent=(ok?'✓ ':'⚠ ')+t;e.classList.toggle('bad',!ok);e.classList.add('on');clearTimeout(window._mt);window._mt=setTimeout(()=>e.classList.remove('on'),ok?2600:4200)}
 const MSG={'auth/email-already-in-use':'البريد الإلكتروني مستخدم بالفعل. جرّب تسجيل الدخول.','auth/invalid-email':'البريد الإلكتروني غير صحيح.','auth/missing-password':'اكتب كلمة المرور.','auth/weak-password':'كلمة المرور ضعيفة؛ استخدم 6 أحرف على الأقل.','auth/invalid-credential':'البريد الإلكتروني أو كلمة المرور غير صحيحة.','auth/invalid-login-credentials':'البريد الإلكتروني أو كلمة المرور غير صحيحة.','auth/user-not-found':'لا يوجد حساب بهذا البريد الإلكتروني.','auth/wrong-password':'كلمة المرور غير صحيحة.','auth/user-disabled':'هذا الحساب موقوف. تواصل مع المطعم.','auth/too-many-requests':'محاولات كثيرة. حاول مرة أخرى لاحقًا.','auth/network-request-failed':'تعذر الاتصال بالإنترنت. حاول مرة أخرى.','auth/operation-not-allowed':'تسجيل الدخول بالبريد وكلمة المرور غير مفعّل في Firebase (Authentication ← Sign-in method ← Email/Password).','auth/unauthorized-domain':'هذا الدومين غير مضاف في Firebase (Authentication ← Settings ← Authorized domains).','auth/requires-recent-login':'لأسباب أمنية سجّل الخروج وادخل من جديد ثم أعد المحاولة.','auth/operation-not-supported-in-this-environment':'افتح الموقع من رابط الاستضافة (https) وليس من الملف مباشرة.','auth/configuration-not-found':'خدمة Authentication غير مفعّلة في مشروع Firebase.','permission-denied':'ليس لديك صلاحية لهذه العملية. (تأكد من نشر قواعد Firestore، وأن بريدك مُفعّل)','unavailable':'تعذر الاتصال بقاعدة البيانات. حاول مرة أخرى.','not-found':'قاعدة بيانات Firestore غير مُنشأة في المشروع بعد.','failed-precondition':'قاعدة بيانات Firestore غير جاهزة بعد.'};
 const LOADFAIL='تعذر تحميل خدمة Firebase. تأكد من اتصال الإنترنت (وأن الموقع غير محجوب) ثم حدّث الصفحة.';
-const errMsg=e=>e&&e.message==='load-failed'?LOADFAIL:(e&&String(e.code||'').startsWith('functions/')&&e.code!=='functions/internal'&&e.message)?e.message:(MSG[e&&e.code]||MSG[String(e&&e.code||'').replace('firestore/','')]||('تعذر إكمال العملية ('+((e&&(e.code||e.message))||'خطأ غير معروف')+')'));
+const FNMSG={'functions/internal':'تعذر إكمال الطلب بالنقاط الآن (functions/internal). لم يُخصم أي رصيد. أعد المحاولة بعد قليل أو اطلب بدون نقاط.','functions/not-found':'خدمة النقاط غير منشورة على Firebase بعد (functions/not-found). تواصل مع الإدارة.','functions/unavailable':'تعذر الوصول لخدمة النقاط. تأكد من الإنترنت وأعد المحاولة.','functions/unauthenticated':'سجّل الدخول أولاً ثم أعد المحاولة.','functions/deadline-exceeded':'انتهت مهلة العملية. أعد المحاولة.'};
+const errMsg=e=>e&&e.message==='load-failed'?LOADFAIL:(e&&FNMSG[e.code])?FNMSG[e.code]:(e&&String(e.code||'').startsWith('functions/')&&e.code!=='functions/internal'&&e.message)?e.message:(MSG[e&&e.code]||MSG[String(e&&e.code||'').replace('firestore/','')]||('تعذر إكمال العملية ('+((e&&(e.code||e.message))||'خطأ غير معروف')+')'));
 async function run(fn,ok){const act=window._act;window._act=null;busy(1);try{await fn();if(ok)msg(ok);if(act)logAct(act);return true}catch(e){console.error(e);msg(errMsg(e),false);return false}finally{busy(0)}}
 const validEmail=v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
 const validPhone=v=>!v||/^\+?[0-9٠-٩\s-]{10,15}$/.test(v);
@@ -1467,6 +1468,7 @@ AK.placePointsOrder=async o=>{
    total:(+o.s||0)+(+o.f||0),
    usePoints:Math.max(0,Math.floor(+o.up||0)),
    items:cart.map(x=>({
+    id:String(x.id||'').slice(0,120),
     n:String(x.n||'').slice(0,80),
     v:String(x.v||'').slice(0,80),
     p:+x.p||0,
