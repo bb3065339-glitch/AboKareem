@@ -894,6 +894,18 @@ html[data-theme=dark] .sup-m{background:#1f2630!important;color:#f2f2f5!importan
 .sup-m.me{background:var(--red)!important;color:#fff!important;border-radius:16px 16px 4px 16px!important}
 .sup-m time{display:block;font-size:.68rem;opacity:.7;margin-top:3px;text-align:end}
 .sup-in{background:var(--cd);border:1px solid var(--ln);border-radius:26px;padding:6px}.sup-in textarea{border:0!important;background:transparent!important;border-radius:18px}
+#sup .box.sup-box{position:fixed!important;inset:0!important;width:100%!important;max-width:none!important;height:100%!important;max-height:none!important;border-radius:0!important;padding:0!important;margin:0!important;display:flex;flex-direction:column;background:#fafafa;overflow:hidden}
+html[data-theme=dark] #sup .box.sup-box{background:#12151b}
+#sup .sup-h{border-radius:0;margin:0;padding:calc(12px + env(safe-area-inset-top,0px)) 14px 12px;background:#e4002b;flex:none}
+#sup .sup-h b{text-align:center;font-size:1.15rem}
+#sup #supList,#sup #supNewF,#sup #supTh{flex:1;min-height:0;overflow-y:auto;padding:12px;background:repeating-radial-gradient(circle at 0 120%,transparent 0 14px,#0000000a 14px 15px)}
+#sup #supTh:not([hidden]){display:flex;flex-direction:column}
+#sup #supMsgs{flex:1;max-height:none;min-height:0;background:transparent!important;padding:4px 0}
+#sup .sup-m{border:1px solid #e4e4e8;border-radius:8px!important;padding:12px 14px;max-width:88%}
+#sup .sup-m.me{border-color:var(--red)}
+#sup .sup-in{flex:none;margin:8px 0 calc(6px + env(safe-area-inset-bottom,0px));border-radius:30px;background:#fff;box-shadow:0 2px 10px #0002;align-items:center}
+html[data-theme=dark] #sup .sup-in{background:#1b1e26}
+#sup .sup-home{width:44px;height:44px;border:0;border-radius:50%;background:transparent;font-size:1.5rem;filter:hue-rotate(-10deg);cursor:pointer}
 </style>
 </head>
 <body>
@@ -947,10 +959,10 @@ html[data-theme=dark] .sup-m{background:#1f2630!important;color:#f2f2f5!importan
 
 
 <div class="sheet" id="sup"><div class="box sup-box">
-<div class="sup-h"><button class="x" id="supBack" hidden aria-label="رجوع">→</button><b id="supT">الدعم والتواصل</b><button class="x" onclick="closeS('sup')" aria-label="إغلاق">✕</button></div>
+<div class="sup-h"><button class="x" id="supBack" hidden aria-label="رجوع">→</button><b id="supT">الدعم والتواصل</b><button class="x" onclick="closeS('sup');window.__supDismiss&&window.__supDismiss()" aria-label="إغلاق">✕</button></div>
 <div id="supList"><div class="sup-tools"><input id="supQ" placeholder="ابحث باسم العميل أو رقم المحادثة" hidden><select id="supF" hidden><option value="">كل الحالات</option><option value="open">مفتوحة</option><option value="review">قيد المراجعة</option><option value="solved">تم الحل</option></select><button class="btn gold" id="supNew" type="button">＋ محادثة جديدة مع الإدارة</button></div><div id="supItems"></div></div>
 <div id="supNewF" hidden><label>نوع التواصل</label><select id="supType"><option>شكوى</option><option>استفسار</option><option>طلب مساعدة</option><option>مشكلة في الطلب</option><option>مشكلة في الحساب أو النقاط</option><option>اقتراح أو طلب آخر</option></select><label>الموضوع</label><input id="supSubj" maxlength="80" placeholder="عنوان مختصر"><label>رسالتك</label><textarea id="supFirst" rows="4" maxlength="2000"></textarea><div class="err" id="supErr"></div><button class="btn" id="supGo" type="button" style="width:100%;margin-top:8px">إرسال</button></div>
-<div id="supTh" hidden><div class="sup-info" id="supInfo"></div><div id="supMsgs"></div><div class="sup-in"><label class="sup-img">📷<input type="file" accept="image/*" hidden id="supImg"></label><textarea id="supTx" rows="1" maxlength="2000" placeholder="اكتب رسالتك…"></textarea><button class="btn" id="supSend" type="button">إرسال</button></div></div>
+<div id="supTh" hidden><div class="sup-info" id="supInfo"></div><div id="supMsgs"></div><div class="sup-in"><button type="button" class="sup-home" aria-label="الرئيسية" onclick="closeS('sup');window.__supDismiss&&window.__supDismiss()">🏠</button><label class="sup-img">📷<input type="file" accept="image/*" hidden id="supImg"></label><textarea id="supTx" rows="1" maxlength="2000" placeholder="اكتب رسالتك…"></textarea><button class="btn" id="supSend" type="button">إرسال</button></div></div>
 </div></div>
 <div id="busy" aria-hidden="true"><i></i></div>
 
@@ -1729,7 +1741,7 @@ function newOnes(s,first,key,txt){if(first)return;s.docChanges().forEach(c=>{con
 async function watchMine(){
  const{fs,db}=await F();offMine&&offMine();first1=true;
  offMine=fs.onSnapshot(fs.query(fs.collection(db,'supportChats'),fs.where('uid','==',me.uid)),s=>{
-  mine=s.docs.map(d=>({id:d.id,...d.data()}));newOnes(s,first1,'unreadUser','💬 وصلتك رسالة جديدة من الإدارة');first1=false;dots();if(mode==='u')list()},e=>console.warn('support',e.code))}
+  let hh={};try{hh=JSON.parse(localStorage.getItem('ak_sup_hid')||'{}')}catch(e){}mine=s.docs.map(d=>({id:d.id,...d.data()})).filter(c=>{const u=c.updatedAt&&c.updatedAt.toMillis?c.updatedAt.toMillis():Infinity;return !(hh[c.id]&&u<=hh[c.id])});newOnes(s,first1,'unreadUser','💬 وصلتك رسالة جديدة من الإدارة');first1=false;dots();if(mode==='u')list()},e=>console.warn('support',e.code))}
 async function adminWatch(){
  if(offAll||!isAdm())return;const{fs,db}=await F();first2=true;
  offAll=fs.onSnapshot(fs.collection(db,'supportChats'),s=>{
@@ -1737,7 +1749,7 @@ async function adminWatch(){
 F().then(({au,auth})=>au.onAuthStateChanged(auth,u=>{me=u;offMine&&offMine();offMine=null;mine=[];if(u)watchMine();else if(offAll){offAll();offAll=null;all=[]}fill();setTimeout(adminWatch,2500)})).catch(e=>console.warn(e));
 
 const show=v=>{['supList','supNewF','supTh'].forEach(i=>$('#'+i).hidden=i!==v);$('#supBack').hidden=v==='supList';if(v!=='supTh'&&offTh){offTh();offTh=null;cur=null}};
-window.openSup=m=>{
+window.__supDismiss=()=>{if(mode!=='u')return;try{const h=JSON.parse(localStorage.getItem('ak_sup_hid')||'{}');mine.forEach(c=>{h[c.id]=(c.updatedAt&&c.updatedAt.toMillis?c.updatedAt.toMillis():0)||Date.now()});localStorage.setItem('ak_sup_hid',JSON.stringify(h))}catch(e){}mine=[];show('supList');list()}; window.openSup=m=>{
  if(m==='u'&&!me){say('سجّل دخولك الأول عشان تتواصل مع الإدارة');openS('account');return}
  if(m==='a'&&!isAdm()){say('هذا القسم للمدير فقط');return}
  mode=m;$('#supT').textContent=m==='a'?'الدعم والتواصل — الإدارة':'الدعم والمساعدة';
