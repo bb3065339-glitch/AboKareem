@@ -781,6 +781,70 @@ header .hr .ib{width:40px;height:40px}
  .wl-bal{font-size:2.2rem}
 }
 </style>
+<style id="ak-drawer-css">
+/* ===== القائمة الجانبية (الثلاث شرطات) ===== */
+#side .dr{width:min(86vw,340px);padding:14px 16px calc(16px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:10px;overflow:auto;background:#140d0b;color:#f4ebdd}
+.dr-top{display:flex;align-items:center;gap:10px}
+.dr-top .x{float:none;order:3;background:#ffffff14;color:#fff;flex:none}
+.dr-u{flex:1;display:flex;align-items:center;gap:10px;cursor:pointer;min-width:0;text-align:right}
+.dr-u b{display:block;font-size:1.05rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dr-u small{display:block;color:#d9c9ad;font-size:.78rem;line-height:1.3}
+.dr-av{width:52px;height:52px;flex:none;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:1.5rem;font-weight:800;border:2px solid var(--gold)}
+.dr-bell{position:relative;width:42px;height:42px;flex:none;border-radius:50%;border:1px solid #d4a63a77;background:#000;color:#fff;font-size:1.15rem;cursor:pointer}
+.dr-bell i,.sup-dot{position:absolute;top:6px;right:8px;width:10px;height:10px;border-radius:50%;background:#ff3b3b;border:2px solid #140d0b}
+.dr-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 2px}
+.dr-row>b{font-size:.95rem;color:#fff}
+.dr-seg{display:flex;gap:6px}
+.dr-seg button{border:1px solid #ffffff33;background:transparent;color:#fff;border-radius:10px;padding:7px 12px;font-weight:700;cursor:pointer}
+.dr-seg button.on{border-color:var(--red);color:#fff;background:#b3202a33}
+.dr-row select{width:auto;min-width:120px;padding:7px 10px;background:#ffffff0d;color:#fff;border-color:#ffffff33}
+.dr hr{border:0;border-top:1px solid #ffffff26;margin:2px 0;width:100%}
+.dr-links{display:flex;flex-direction:column}
+.dr-links button,.dr-adm{display:flex;align-items:center;gap:14px;background:none;border:0;color:#fff;font-weight:700;font-size:1.05rem;padding:14px 4px;cursor:pointer;text-align:right;width:100%}
+.dr-links button:active,.dr-adm:active{background:#ffffff14}
+.dr-links button span,.dr-adm span{width:30px;text-align:center;font-size:1.35rem;flex:none}
+.dr-sw{justify-content:flex-start;gap:14px!important}
+.dr-sw input{appearance:none;-webkit-appearance:none;width:46px;height:26px;padding:0;border-radius:14px;background:#4a3f38;border:0;position:relative;cursor:pointer;margin:0;flex:none;order:2}
+.dr-sw input::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+.dr-sw input:checked{background:var(--red)}.dr-sw input:checked::after{inset-inline-start:23px}
+.dr-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px solid #ffffff26}
+.dr-sup{display:flex;align-items:center;gap:10px;background:#1f2a3a;border:0;border-radius:14px;color:#fff;font-weight:800;padding:13px 16px;cursor:pointer;position:relative;flex:1}
+.dr-sup .sup-dot{top:8px;right:auto;left:10px}
+.dr-foot small{color:#9d8f80}
+#side .menu-soc-t{margin-top:4px}
+/* ===== الوضع الداكن (من إعدادات القائمة) ===== */
+html[data-theme=dark]{--bg:#130d0b;--cd:#1d1511;--tx:#f4ebdd;--mu:#b9a995;--ln:#3a2a22;--gl:#f0cd7a}
+html[data-theme=dark] body{background:#130d0b;color:var(--tx)}
+html[data-theme=dark] .card,html[data-theme=dark] #nav,html[data-theme=dark] #nav a,html[data-theme=dark] .bn,html[data-theme=dark] .box:not(.dr),html[data-theme=dark] .cr,html[data-theme=dark] .pc{background:#1d1511;color:var(--tx);border-color:var(--ln)}
+html[data-theme=dark] #nav a.on{background:var(--red);border-color:var(--red)}
+html[data-theme=dark] .sec,html[data-theme=dark] .box h2{color:var(--gl)}
+html[data-theme=dark] .srch input,html[data-theme=dark] select,html[data-theme=dark] input,html[data-theme=dark] textarea,html[data-theme=dark] .chip{background:#ffffff0d;color:var(--tx);border-color:#4a362c}
+html[data-theme=dark] .chip b,html[data-theme=dark] .card h3{color:var(--gl)}
+html[data-theme=dark] .bn a,html[data-theme=dark] .bn button{color:#c9b79f}
+/* ===== الدعم والمحادثات ===== */
+.sup-box{max-width:520px;display:flex;flex-direction:column;min-height:70vh}
+.sup-h{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.sup-h b{flex:1;font-size:1.05rem}.sup-h .x{float:none}
+.sup-tools{display:grid;gap:8px;margin-bottom:8px}
+.sup-it{display:block;width:100%;text-align:right;border:1px solid var(--ln);border-radius:14px;padding:10px 12px;margin-bottom:8px;background:transparent;cursor:pointer;position:relative}
+.sup-it .r{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.sup-it small{color:var(--mu);display:block}
+.sup-it .sup-dot{top:10px;right:auto;left:10px;border-color:#fff}
+.sup-st{font-size:.72rem;font-weight:800;border-radius:10px;padding:2px 9px;background:#fff3cf;color:#8a6410}
+.sup-st.review{background:#dbe9ff;color:#1c4a96}.sup-st.solved{background:#d7f3df;color:#1a6b34}
+#supMsgs{flex:1;overflow:auto;max-height:46vh;display:flex;flex-direction:column;gap:8px;padding:6px 2px}
+.sup-m{max-width:82%;padding:8px 12px;border-radius:14px;background:#f1e9df;color:#2a211c;white-space:pre-wrap;word-break:break-word;align-self:flex-start}
+.sup-m.me{align-self:flex-end;background:var(--red);color:#fff}
+.sup-m img{max-width:100%;border-radius:10px;display:block;margin-bottom:4px}
+.sup-m time{display:block;font-size:.65rem;opacity:.7;margin-top:2px}
+.sup-in{display:flex;gap:6px;align-items:flex-end;margin-top:8px}
+.sup-in textarea{flex:1;min-height:44px;max-height:110px}
+.sup-img{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--ln);border-radius:12px;cursor:pointer;font-size:1.2rem;flex:none}
+.sup-info{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:.82rem;color:var(--mu);margin-bottom:6px}
+.sup-info select{width:auto;padding:5px 8px}
+html[data-theme=dark] .sup-m{background:#2a1d18;color:#f4ebdd}html[data-theme=dark] .sup-m.me{background:var(--red);color:#fff}
+.sup-bdg{background:#ff3b3b;color:#fff;border-radius:10px;font-size:.7rem;padding:0 7px;margin-inline-start:6px}
+</style>
 </head>
 <body>
 <div id="note" style="display:none"></div>
@@ -809,9 +873,34 @@ header .hr .ib{width:40px;height:40px}
 <p style="color:var(--mu);font-size:.8rem">سيفتح واتساب برسالة جاهزة، ولا يُعتبر الطلب مؤكدًا إلا بعد إرسالك للرسالة واستلام المطعم لها.</p>
 </div></div></div>
 
-<div class="sheet" id="side" onclick="if(event.target===this)closeS('side')"><div class="box menu-box"><button class="x" onclick="closeS('side')" aria-label="إغلاق">✕</button><div class="menu-title">أبو كريم الحاتي</div><nav class="menu-links" id="sidelinks"></nav><div class="menu-soc-t">تابعنا</div><div class="soc" data-soc=""></div></div></div>
+<div class="sheet" id="side" onclick="if(event.target===this)closeS('side')"><div class="box menu-box dr">
+<div class="dr-top"><div class="dr-u" id="drUser"><div class="dr-av" id="drAv">؟</div><div><b id="drName">أهلاً بيك</b><small id="drSub">سجّل دخولك للعروض الحصرية</small></div></div><button class="dr-bell" id="drBell" aria-label="الدعم والإشعارات">🔔<i id="drDot" hidden></i></button><button class="x" onclick="closeS('side')" aria-label="إغلاق">✕</button></div>
+<div class="dr-row"><b>اللغة / Language</b><div class="dr-seg"><button class="on" data-lang="ar">✓ عربي</button><button data-lang="en">English</button></div></div>
+<div class="dr-row"><b>البلد</b><span>🇪🇬 مصر</span></div>
+<div class="dr-row"><b>المظهر</b><select id="drTheme" aria-label="المظهر"><option value="light">فاتح</option><option value="dark">داكن</option><option value="auto">تلقائي</option></select></div>
+<hr>
+<nav class="dr-links">
+<button data-go="orders"><span>📍</span>تتبع الطلب</button>
+<button data-go="orders"><span>🧾</span>الطلبات السابقة</button>
+<button data-go="points"><span>💰</span>محفظتي ونقاطي</button>
+<button data-go="offers"><span>🏷️</span>العروض</button>
+<button data-go="menu"><span>📖</span>استكشاف القائمة</button>
+<button data-go="settings"><span>⚙️</span>إعدادات الحساب</button>
+<button class="dr-sw" type="button"><span>📣</span>إشعارات التسويق<input type="checkbox" id="drMk" aria-label="إشعارات التسويق"></button>
+</nav>
+<button class="dr-adm" id="drAdm" hidden><span>🛡️</span>الدعم والتواصل (الإدارة)<em class="sup-bdg" id="drAdmN" hidden>0</em></button>
+<div class="dr-foot"><button class="dr-sup" id="drSup"><span>🎧</span>الدعم والمساعدة<i class="sup-dot" id="drSupDot" hidden></i></button><small>v1.1</small></div>
+<nav id="sidelinks" hidden></nav>
+<div class="menu-soc-t">تابعنا</div><div class="soc" data-soc=""></div>
+</div></div>
 
 
+<div class="sheet" id="sup"><div class="box sup-box">
+<div class="sup-h"><button class="x" id="supBack" hidden aria-label="رجوع">→</button><b id="supT">الدعم والتواصل</b><button class="x" onclick="closeS('sup')" aria-label="إغلاق">✕</button></div>
+<div id="supList"><div class="sup-tools"><input id="supQ" placeholder="ابحث باسم العميل أو رقم المحادثة" hidden><select id="supF" hidden><option value="">كل الحالات</option><option value="open">مفتوحة</option><option value="review">قيد المراجعة</option><option value="solved">تم الحل</option></select><button class="btn gold" id="supNew" type="button">＋ محادثة جديدة مع الإدارة</button></div><div id="supItems"></div></div>
+<div id="supNewF" hidden><label>نوع التواصل</label><select id="supType"><option>شكوى</option><option>استفسار</option><option>طلب مساعدة</option><option>مشكلة في الطلب</option><option>مشكلة في الحساب أو النقاط</option><option>اقتراح أو طلب آخر</option></select><label>الموضوع</label><input id="supSubj" maxlength="80" placeholder="عنوان مختصر"><label>رسالتك</label><textarea id="supFirst" rows="4" maxlength="2000"></textarea><div class="err" id="supErr"></div><button class="btn" id="supGo" type="button" style="width:100%;margin-top:8px">إرسال</button></div>
+<div id="supTh" hidden><div class="sup-info" id="supInfo"></div><div id="supMsgs"></div><div class="sup-in"><label class="sup-img">📷<input type="file" accept="image/*" hidden id="supImg"></label><textarea id="supTx" rows="1" maxlength="2000" placeholder="اكتب رسالتك…"></textarea><button class="btn" id="supSend" type="button">إرسال</button></div></div>
+</div></div>
 <div id="busy" aria-hidden="true"><i></i></div>
 
 <div class="sheet" id="ct"><div class="box contact-box"><button class="x" onclick="closeS('ct')" aria-label="إغلاق">✕</button><div class="contact-head"><span class="contact-mark">📞</span><div><h2>تواصل معنا</h2><p>يسعدنا خدمتك في أي وقت</p></div></div><div id="ctc"></div></div></div>
@@ -1532,6 +1621,119 @@ adm().addEventListener('click',async e=>{
  try{await loadSite()}catch(e){console.warn('site data:',e)}
 })();
 
+</script>
+<script type="module">
+/* ===== القائمة الجانبية + الدعم والمحادثات (Firestore) — يعمل فوق الكود الحالي بدون تعديله ===== */
+const CFG={apiKey:"AIzaSyC7B8_Z00RDGGcnpmdV6WzsT_GtNRPt3Cs",authDomain:"ak12-bd123.firebaseapp.com",projectId:"ak12-bd123",storageBucket:"ak12-bd123.firebasestorage.app",messagingSenderId:"792429063365",appId:"1:792429063365:web:a3e36fb66b275cbd1dd4ac"};
+const V='11.0.2',$=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const say=m=>{try{toast(m)}catch(e){}};
+const ST={open:'مفتوحة',review:'قيد المراجعة',solved:'تم الحل'};
+let fb,me=null,mode='u',mine=[],all=[],cur=null,offTh=null,offMine=null,offAll=null,first1=true,first2=true;
+const F=()=>fb||(fb=(async()=>{const[a,au,fs]=await Promise.all(['app','auth','firestore'].map(n=>import(`https://www.gstatic.com/firebasejs/${V}/firebase-${n}.js`)));const app=a.getApps().length?a.getApp():a.initializeApp(CFG);return{au,fs,auth:au.getAuth(app),db:fs.getFirestore(app)}})());
+const isAdm=()=>!!(window.AK&&AK.isAdmin);
+
+/* ---------- المظهر / اللغة / الإشعارات ---------- */
+const mq=matchMedia('(prefers-color-scheme:dark)');
+function theme(v){const d=v==='dark'||(v==='auto'&&mq.matches);document.documentElement.dataset.theme=d?'dark':'light';document.documentElement.style.colorScheme=d?'dark':'light'}
+let tv='light';try{tv=localStorage.getItem('ak_theme')||'light'}catch(e){}
+theme(tv);mq.addEventListener&&mq.addEventListener('change',()=>{if(tv==='auto')theme('auto')});
+$('#drTheme').value=tv;
+$('#drTheme').onchange=e=>{tv=e.target.value;try{localStorage.setItem('ak_theme',tv)}catch(x){}theme(tv)};
+try{$('#drMk').checked=localStorage.getItem('ak_mk')==='1'}catch(e){}
+$('#drMk').onchange=e=>{try{localStorage.setItem('ak_mk',e.target.checked?'1':'0')}catch(x){}say(e.target.checked?'تم تفعيل إشعارات التسويق':'تم إيقاف إشعارات التسويق')};
+document.querySelector('.dr-sw').onclick=e=>{if(e.target.id!=='drMk'){const c=$('#drMk');c.checked=!c.checked;c.onchange({target:c})}};
+document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{if(b.dataset.lang==='en')say('النسخة الإنجليزية قريبًا')});
+
+/* ---------- بيانات المستخدم داخل القائمة ---------- */
+function fill(){
+ const p=(window.AK&&AK.profile)||{},u=me;
+ const n=(p.name||(u&&(u.displayName||u.email))||'').trim();
+ $('#drAv').textContent=n?n[0].toUpperCase():'؟';
+ $('#drName').textContent=u?(n||'حسابي'):'أهلاً بيك';
+ $('#drSub').textContent=u?(p.phone||u.email||''):'سجّل دخولك للعروض الحصرية';
+ $('#drAdm').hidden=!isAdm();
+ dots();adminWatch();
+}
+new MutationObserver(()=>{if($('#side').classList.contains('open'))fill()}).observe($('#side'),{attributes:true,attributeFilter:['class']});
+const goAcc=v=>{closeS('side');openS('account');setTimeout(()=>{const b=document.querySelector('#account .ak-nav[data-view="'+v+'"]');b&&b.click()},120)};
+document.querySelectorAll('.dr-links [data-go]').forEach(b=>b.onclick=()=>{
+ const g=b.dataset.go;
+ if(g==='offers'){closeS('side');($('#offers')||document.body).scrollIntoView({behavior:'smooth'})}
+ else if(g==='menu'){closeS('side');($('#q')||document.body).scrollIntoView({behavior:'smooth',block:'center'})}
+ else goAcc(g)});
+$('#drUser').onclick=()=>{closeS('side');openS('account')};
+$('#drBell').onclick=$('#drSup').onclick=()=>{closeS('side');openSup('u')};
+$('#drAdm').onclick=()=>{closeS('side');openSup('a')};
+/* زر الدعم داخل لوحة الإدارة الحالية */
+const am=$('#admc');am&&new MutationObserver(()=>{if(!am.querySelector('.sup-open')){const b=document.createElement('button');b.className='btn gold sup-open';b.style.cssText='width:100%;margin-bottom:10px';b.textContent='💬 الدعم والتواصل';b.onclick=()=>{closeS('adm');openSup('a')};am.prepend(b)}}).observe(am,{childList:true});
+
+/* ---------- المحادثات ---------- */
+function dots(){
+ const un=mine.some(c=>c.unreadUser),na=all.filter(c=>c.unreadAdmin).length;
+ $('#drDot').hidden=!un;$('#drSupDot').hidden=!un;
+ const b=$('#drAdmN');b.hidden=!na;b.textContent=na;
+}
+function newOnes(s,first,key,txt){if(first)return;s.docChanges().forEach(c=>{const d=c.doc.data();if(c.type!=='removed'&&d[key]&&!c.doc.metadata.hasPendingWrites)say(txt)})}
+async function watchMine(){
+ const{fs,db}=await F();offMine&&offMine();first1=true;
+ offMine=fs.onSnapshot(fs.query(fs.collection(db,'supportChats'),fs.where('uid','==',me.uid)),s=>{
+  mine=s.docs.map(d=>({id:d.id,...d.data()}));newOnes(s,first1,'unreadUser','💬 وصلتك رسالة جديدة من الإدارة');first1=false;dots();if(mode==='u')list()},e=>console.warn('support',e.code))}
+async function adminWatch(){
+ if(offAll||!isAdm())return;const{fs,db}=await F();first2=true;
+ offAll=fs.onSnapshot(fs.collection(db,'supportChats'),s=>{
+  all=s.docs.map(d=>({id:d.id,...d.data()}));newOnes(s,first2,'unreadAdmin','💬 رسالة دعم جديدة من عميل');first2=false;dots();if(mode==='a')list()},e=>{console.warn('support-admin',e.code);offAll=null})}
+F().then(({au,auth})=>au.onAuthStateChanged(auth,u=>{me=u;offMine&&offMine();offMine=null;mine=[];if(u)watchMine();else if(offAll){offAll();offAll=null;all=[]}fill();setTimeout(adminWatch,2500)})).catch(e=>console.warn(e));
+
+const show=v=>{['supList','supNewF','supTh'].forEach(i=>$('#'+i).hidden=i!==v);$('#supBack').hidden=v==='supList';if(v!=='supTh'&&offTh){offTh();offTh=null;cur=null}};
+window.openSup=m=>{
+ if(m==='u'&&!me){say('سجّل دخولك الأول عشان تتواصل مع الإدارة');openS('account');return}
+ if(m==='a'&&!isAdm()){say('هذا القسم للمدير فقط');return}
+ mode=m;$('#supT').textContent=m==='a'?'الدعم والتواصل — الإدارة':'الدعم والمساعدة';
+ $('#supQ').hidden=$('#supF').hidden=m!=='a';$('#supNew').hidden=m==='a';
+ show('supList');openS('sup');if(m==='a')adminWatch();list()};
+const tm=t=>t&&t.toMillis?new Date(t.toMillis()).toLocaleString('ar-EG',{dateStyle:'short',timeStyle:'short'}):'';
+function list(){
+ let a=(mode==='a'?all:mine).slice().sort((x,y)=>(y.updatedAt?.toMillis?.()||0)-(x.updatedAt?.toMillis?.()||0));
+ if(mode==='a'){const q=$('#supQ').value.trim().toLowerCase(),f=$('#supF').value;a=a.filter(c=>(!f||c.status===f)&&(!q||(c.name||'').toLowerCase().includes(q)||(c.num||'').toLowerCase().includes(q)))}
+ $('#supItems').innerHTML=a.length?a.map(c=>`<button class="sup-it" data-id="${E(c.id)}">${(mode==='a'?c.unreadAdmin:c.unreadUser)?'<i class="sup-dot"></i>':''}<div class="r"><b>${E(c.subject||c.type)}</b><span class="sup-st ${E(c.status)}">${ST[c.status]||''}</span></div><small>#${E(c.num)} • ${E(c.type)}${mode==='a'?' • '+E(c.name)+(c.email?' • '+E(c.email):''):''}</small><small>${E(c.lastMsg||'')}</small><small>${tm(c.updatedAt)}</small></button>`).join(''):'<p class="empty">'+(mode==='a'?'لا توجد محادثات.':'لا توجد محادثات سابقة. ابدأ محادثة جديدة مع الإدارة.')+'</p>';
+ document.querySelectorAll('.sup-it').forEach(b=>b.onclick=()=>openTh(b.dataset.id))}
+$('#supQ').oninput=$('#supF').onchange=list;
+$('#supBack').onclick=()=>{show('supList');list()};
+$('#supNew').onclick=()=>{$('#supErr').textContent='';show('supNewF')};
+$('#supGo').onclick=async()=>{
+ const t=$('#supFirst').value.trim(),s=$('#supSubj').value.trim()||$('#supType').value;
+ if(!t){$('#supErr').textContent='اكتب رسالتك أولاً';return}
+ const b=$('#supGo');b.disabled=true;
+ try{const{fs,db}=await F(),p=(window.AK&&AK.profile)||{};
+  const r=await fs.addDoc(fs.collection(db,'supportChats'),{uid:me.uid,name:p.name||me.displayName||me.email||'عميل',email:me.email||'',type:$('#supType').value,subject:s.slice(0,80),status:'open',num:'AK-'+String(Date.now()).slice(-6),lastMsg:t.slice(0,80),lastBy:'user',unreadAdmin:true,unreadUser:false,createdAt:fs.serverTimestamp(),updatedAt:fs.serverTimestamp()});
+  await fs.addDoc(fs.collection(db,'supportChats',r.id,'messages'),{by:'user',uid:me.uid,text:t,createdAt:fs.serverTimestamp()});
+  $('#supFirst').value='';$('#supSubj').value='';openTh(r.id)}
+ catch(e){console.error(e);$('#supErr').textContent=e.code==='permission-denied'?'لم يتم تفعيل قواعد الدعم في Firestore بعد (راجع ملف firestore-support.rules.txt).':'تعذر الإرسال، حاول مرة أخرى.'}
+ b.disabled=false};
+async function openTh(id){
+ const{fs,db}=await F();cur=(mode==='a'?all:mine).find(c=>c.id===id)||{id};show('supTh');
+ const flag=mode==='a'?'unreadAdmin':'unreadUser';
+ if(cur[flag])fs.updateDoc(fs.doc(db,'supportChats',id),{[flag]:false}).catch(()=>{});
+ info();offTh=fs.onSnapshot(fs.query(fs.collection(db,'supportChats',id,'messages'),fs.orderBy('createdAt')),s=>{
+  const box=$('#supMsgs'),me2=mode==='a'?'admin':'user';
+  box.innerHTML=s.docs.map(d=>{const m=d.data(),img=/^data:image\/jpeg;base64,/.test(m.img||'')?`<img src="${m.img}" alt="">`:'';return`<div class="sup-m ${m.by===me2?'me':''}">${img}${E(m.text)}<time>${tm(m.createdAt)}</time></div>`}).join('');box.scrollTop=box.scrollHeight;
+  if(s.docs.length&&!s.metadata.hasPendingWrites){fs.updateDoc(fs.doc(db,'supportChats',id),{[flag]:false}).catch(()=>{})}})}
+function info(){
+ const c=cur||{},el=$('#supInfo');
+ el.innerHTML=`<span>#${E(c.num)} • ${E(c.type)}${mode==='a'?' • '+E(c.name)+' '+E(c.email):''}</span>`+(mode==='a'?`<span><select id="supSt"><option value="open">مفتوحة</option><option value="review">قيد المراجعة</option><option value="solved">تم الحل</option></select> <button class="btn sm" id="supTog" type="button">${c.status==='solved'?'إعادة فتح':'إغلاق المحادثة'}</button></span>`:`<span class="sup-st ${E(c.status)}">${ST[c.status]||''}</span>`);
+ if(mode==='a'){$('#supSt').value=c.status||'open';$('#supSt').onchange=e=>setSt(e.target.value);$('#supTog').onclick=()=>setSt(c.status==='solved'?'open':'solved')}}
+async function setSt(v){const{fs,db}=await F();try{await fs.updateDoc(fs.doc(db,'supportChats',cur.id),{status:v,updatedAt:fs.serverTimestamp()});cur.status=v;info()}catch(e){say('تعذر تغيير الحالة')}}
+async function send(text,img){
+ if(!cur||(!text&&!img))return;const{fs,db}=await F(),a=mode==='a',m={by:a?'admin':'user',uid:me.uid,text:text||'',createdAt:fs.serverTimestamp()};if(img)m.img=img;
+ try{await fs.addDoc(fs.collection(db,'supportChats',cur.id,'messages'),m);
+  const u={lastMsg:(text||'📷 صورة').slice(0,80),lastBy:m.by,updatedAt:fs.serverTimestamp()};
+  if(a){u.unreadUser=true;u.unreadAdmin=false;if(cur.status==='open')u.status='review'}else{u.unreadAdmin=true;if(cur.status&&cur.status!=='open')u.status='open'}
+  await fs.updateDoc(fs.doc(db,'supportChats',cur.id),u);if(u.status){cur.status=u.status;info()}}
+ catch(e){console.error(e);say('تعذر إرسال الرسالة')}}
+$('#supSend').onclick=()=>{const t=$('#supTx').value.trim();if(t){$('#supTx').value='';send(t)}};
+$('#supTx').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&innerWidth>700){e.preventDefault();$('#supSend').click()}};
+$('#supImg').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f||!/^image\//.test(f.type))return;
+ const i=new Image,u=URL.createObjectURL(f);i.onload=()=>{const k=Math.min(1,800/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);const d=c.toDataURL('image/jpeg',.6);d.length>700000?say('الصورة كبيرة، اختار صورة أصغر'):send('',d)};i.onerror=()=>say('تعذر قراءة الصورة');i.src=u};
 </script>
 </body>
 </html>
