@@ -2210,5 +2210,68 @@ function card(){const c=document.createElement('section');c.className='ab-card a
 const am=document.getElementById('admc');
 if(am)new MutationObserver(()=>{const t=am.querySelector('.at .on');if(t&&t.dataset.t==='set'&&!am.querySelector('.ab-fxi')){const f=am.querySelector('.admin-content .ac');(f?f.parentNode:am).insertBefore(card(),f||null);thumbs()}}).observe(am,{childList:true});
 </script>
+<style id="akx-css">
+.akfv{position:absolute;top:8px;left:8px;z-index:3;width:34px;height:34px;border-radius:50%;border:0;background:#fffe;box-shadow:0 2px 8px #0003;font-size:1.05rem;cursor:pointer;display:grid;place-items:center;padding:0}
+.akfv:active{transform:scale(.88)}
+.card .im{position:relative}
+.akhot{position:absolute;top:8px;right:8px;z-index:3;background:linear-gradient(135deg,#a61e22,#7d1216);color:#ffd978;font-size:.72rem;font-weight:800;padding:3px 9px;border-radius:12px;border:1px solid #c8962e}
+#akx .akh2{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:16px 2px 8px;font-weight:800;font-size:1.1rem}
+#akx .akh2 button{border:1px solid var(--ln);background:#fff;border-radius:16px;padding:4px 12px;font-weight:700;font-size:.82rem;cursor:pointer}
+#akx .akh2 button.on{background:var(--red);color:#fff;border-color:var(--red)}
+.akrow{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+.akc{flex:0 0 160px;scroll-snap-align:start;background:#fff;border:1px solid var(--ln);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:6px;position:relative}
+.akc .akt{font-weight:800;font-size:.95rem;min-height:2.6em}
+.akc .akp{color:var(--red2);font-weight:800}.akc small{color:var(--mu)}
+.akc .akb{display:flex;gap:6px;margin-top:auto}
+.akc .akb button{flex:1;border:0;border-radius:10px;padding:7px;font-weight:800;cursor:pointer;background:var(--gold);color:#201305}
+.akc .akb button.akh{flex:0 0 38px;background:#f6f1ea;font-size:1rem}
+.akemp{color:var(--mu);font-size:.9rem;padding:8px 4px}
+@media(min-width:700px){.akc{flex-basis:190px}}
+</style>
+<script type="module" id="akx-js">
+const CFG={apiKey:"AIzaSyC7B8_Z00RDGGcnpmdV6WzsT_GtNRPt3Cs",authDomain:"ak12-bd123.firebaseapp.com",projectId:"ak12-bd123",storageBucket:"ak12-bd123.firebasestorage.app",messagingSenderId:"792429063365",appId:"1:792429063365:web:a3e36fb66b275cbd1dd4ac"},V='11.0.2';
+const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let fb;const F=()=>fb||(fb=(async()=>{const[a,fs]=await Promise.all(['app','firestore'].map(n=>import(`https://www.gstatic.com/firebasejs/${V}/firebase-${n}.js`)));const app=a.getApps().length?a.getApp():a.initializeApp(CFG);return{fs,db:fs.getFirestore(app)}})());
+let uid='guest',favs=[],top=null,per='all',booted=false;
+const LS=k=>{try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}};
+const keyOf=u=>'ak_favs_'+u,saveLocal=()=>{try{localStorage.setItem(keyOf(uid),JSON.stringify(favs))}catch(e){}};
+const tst=m=>{try{toast(m)}catch(e){}};
+function find(n){try{for(let ci=0;ci<D.cats.length;ci++)for(let ii=0;ii<D.cats[ci].items.length;ii++){const it=D.cats[ci].items[ii];if(!it.h&&it.n===n)return{it,ci,ii}}}catch(e){}return null}
+async function push(){if(uid==='guest')return;try{const{fs,db}=await F();await fs.setDoc(fs.doc(db,'users',uid),{favs:favs.slice(0,200)},{merge:true})}catch(e){console.warn('favs sync failed',e)}}
+async function switchUser(nu){const guest=LS(keyOf('guest'));uid=nu;favs=LS(keyOf(uid));paint();if(uid==='guest')return;
+ try{const{fs,db}=await F();const s=await fs.getDoc(fs.doc(db,'users',uid));const r=s.exists()&&Array.isArray(s.data().favs)?s.data().favs:null;
+  favs=r&&r.length?r:[...new Set([...favs,...guest])];saveLocal();if(!r||favs.length!==r.length)push();paint()}catch(e){console.warn(e)}}
+function toggle(n){const i=favs.indexOf(n);if(i<0){favs.unshift(n);tst('❤️ أُضيف للمفضلة')}else{favs.splice(i,1);tst('تمت الإزالة من المفضلة')}saveLocal();push();paint()}
+function addCart(n){const f=find(n);if(!f)return tst('الصنف غير متاح');const{it,ci,ii}=f;if(it.o)return tst('غير متاح حاليًا');
+ if(it.p.length>1){const q=document.getElementById('q');if(q){q.value=n;q.dispatchEvent(new Event('input'));q.scrollIntoView({behavior:'smooth',block:'center'})}return tst('اختر الحجم من القائمة')}
+ const k=ci+'-'+ii+'-0',ex=cart.find(x=>x.k===k);if(ex)ex.q++;else cart.push({k,id:it.id||'',n:it.n,v:'',p:it.p[0],q:1,x:''});save();count();tst('✓ تمت الإضافة للسلة')}
+const topList=()=>((top&&top[per])||[]).filter(x=>find(x.n)).slice(0,8);
+const card=(n,extra)=>{const f=find(n);if(!f)return'';const it=f.it,on=favs.includes(n);return`<div class="akc"><div class="akt">${E(n)}</div><div class="akp">${it.p.length>1?'من '+Math.min(...it.p):it.p[0]} ج.م</div>${extra?`<small>${extra}</small>`:''}<div class="akb"><button data-akadd="${E(n)}">${it.p.length>1?'اختر':'+ أضف'}</button><button class="akh" data-akfv="${E(n)}" aria-label="مفضلة">${on?'❤️':'🤍'}</button></div></div>`};
+function paint(){let box=document.getElementById('akx');const nav=document.getElementById('nav');if(!nav)return;
+ if(!box){box=document.createElement('div');box.id='akx';nav.parentNode.insertBefore(box,nav)}
+ const fl=favs.filter(find),tl=topList();let h='';
+ if(fl.length)h+=`<div class="akh2"><span>❤️ مفضلاتي (${fl.length})</span><button data-akclr>حذف الكل</button></div><div class="akrow">${fl.map(n=>card(n)).join('')}</div>`;
+ if((top&&top.all&&top.all.length)){h+=`<div class="akh2"><span>🔥 الأكثر طلباً</span><span>${[['d','اليوم'],['w','الأسبوع'],['m','الشهر'],['all','الكل']].map(([k,l])=>`<button data-akper="${k}" class="${per===k?'on':''}">${l}</button>`).join(' ')}</span></div>${tl.length?`<div class="akrow">${tl.map((x,i)=>card(x.n,'طُلب '+x.c+' مرة · #'+(i+1))).join('')}</div>`:'<div class="akemp">لا توجد طلبات في هذه الفترة بعد</div>'}`}
+ box.innerHTML=h;decorate()}
+function decorate(){const hot=((top&&top.all)||[]).slice(0,3).map(x=>x.n);document.querySelectorAll('#menu .card').forEach(c=>{const n=((c.querySelector('h3')||{}).textContent||'').trim(),im=c.querySelector('.im');if(!im||!n)return;let b=im.querySelector('.akfv');if(!b){b=document.createElement('button');b.className='akfv';b.setAttribute('aria-label','مفضلة');im.appendChild(b)}b.dataset.n=n;b.textContent=favs.includes(n)?'❤️':'🤍';const h=im.querySelector('.akhot');if(hot.includes(n)){if(!h){const s=document.createElement('span');s.className='akhot';s.textContent='🔥 الأكثر طلباً';im.appendChild(s)}}else if(h)h.remove()})}
+document.addEventListener('click',e=>{const t=e.target;let b;
+ if(b=t.closest('.akfv')){e.stopPropagation();e.preventDefault();toggle(b.dataset.n);return}
+ if(b=t.closest('[data-akfv]')){toggle(b.dataset.akfv);return}
+ if(b=t.closest('[data-akadd]')){addCart(b.dataset.akadd);return}
+ if(b=t.closest('[data-akper]')){per=b.dataset.akper;paint();return}
+ if(t.closest('[data-akclr]')){if(confirm('حذف كل المفضلات؟')){favs=[];saveLocal();push();paint()}}
+},true);
+async function computeTop(){if(!(window.AK&&AK.isAdmin))return;try{const{fs,db}=await F();const s=await fs.getDocs(fs.query(fs.collection(db,'orders'),fs.orderBy('createdAt','desc'),fs.limit(1000)));
+ const now=Date.now(),W={d:864e5,w:6048e5,m:2592e6,all:Infinity},docs=s.docs.map(d=>d.data()),bad=/cancel|reject|refus|ملغ|مرفوض/i,okS=/done|complete|deliver|مكتمل/i;
+ let use=docs.filter(o=>okS.test(o.status||''));if(!use.length)use=docs.filter(o=>!bad.test(o.status||''));
+ const out={};for(const k in W){const m={};use.forEach(o=>{const t=o.createdAt&&o.createdAt.toMillis?o.createdAt.toMillis():0;if(now-t>W[k])return;(o.items||[]).forEach(i=>{const n=String(i.n||'');if(n)m[n]=(m[n]||0)+Math.max(1,+i.q||1)})});out[k]=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([n,c])=>({n,c}))}
+ await fs.setDoc(fs.doc(db,'site','top'),{...out,updatedAt:fs.serverTimestamp()})}catch(e){console.warn('top stats',e)}}
+function boot(){if(booted||typeof D==='undefined'||!document.getElementById('nav'))return;booted=true;
+ favs=LS(keyOf('guest'));paint();
+ new MutationObserver(decorate).observe(document.getElementById('menu'),{childList:true});
+ F().then(({fs,db})=>fs.onSnapshot(fs.doc(db,'site','top'),d=>{top=d.exists()?d.data():null;paint()},()=>{})).catch(()=>{});
+ let adm=false;setInterval(()=>{const u=window.AK&&AK.user,nid=u?u.uid:'guest';if(nid!==uid)switchUser(nid);if(window.AK&&AK.isAdmin&&!adm){adm=true;computeTop();setInterval(computeTop,3e5)}},1200)}
+const t0=setInterval(()=>{boot();if(booted)clearInterval(t0)},300);
+</script>
 </body>
 </html>
