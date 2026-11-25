@@ -1439,7 +1439,7 @@ $i('authGoogle').onclick=async()=>{
  }finally{AK.gbusy=false;gBtn(false)}
 };
 $i('authForgot').onclick=()=>{const email=$i('authEmail').value.trim();if(!validEmail(email))return say('اكتب بريدك الإلكتروني أولًا ثم اضغط «نسيت كلمة المرور؟».');
- run(async()=>{const {au,auth}=await loadFB();await au.sendPasswordResetEmail(auth,email);say('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك (راجع الرسائل غير المرغوبة أيضًا).',true)})};
+ run(async()=>{const {au,auth}=await loadFB();await au.sendPasswordResetEmail(auth,email);say('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك ( ابو كريم الحاتي ).',true)})};
 $i('authLogout').onclick=()=>run(async()=>{const {au,auth}=await loadFB();await au.signOut(auth);setMode('login');['authEmail','authPassword','authName','authPhone'].forEach(x=>$i(x).value='');closeS('account')},'تم تسجيل الخروج');
 $i('verSend').onclick=()=>run(async()=>{const {au}=await loadFB();await au.sendEmailVerification(AK.user)},'تم إرسال رسالة التفعيل');
 $i('verRefresh').onclick=()=>run(async()=>{const {auth}=await loadFB();await auth.currentUser.reload();await auth.currentUser.getIdToken(true);await onUser(auth.currentUser);if(auth.currentUser.emailVerified)msg('تم تفعيل بريدك');else msg('لم يتم التفعيل بعد',false)});
