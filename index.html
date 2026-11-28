@@ -1046,7 +1046,7 @@ html[data-theme=dark] #sup .sup-img{background:#303947}
 <div class="sheet" id="sup"><div class="box sup-box">
 <div class="sup-h"><button class="x" id="supBack" hidden aria-label="رجوع">→</button><b id="supT">الدعم والتواصل</b><button class="x" onclick="closeS('sup');window.__supDismiss&&window.__supDismiss()" aria-label="إغلاق">✕</button></div>
 <div id="supList"><div class="sup-tools"><input id="supQ" placeholder="ابحث باسم العميل أو رقم المحادثة" hidden><select id="supF" hidden><option value="">كل الحالات</option><option value="open">مفتوحة</option><option value="review">قيد المراجعة</option><option value="replied">تم الرد</option><option value="solved">تم الحل</option></select><button class="btn gold" id="supNew" type="button">＋ محادثة جديدة مع الإدارة</button></div><div id="supItems"></div></div>
-<div id="supNewF" hidden><div class="dc-intro"><b>إحنا في مطعم أبو كريم الحاتي يهمنا رضاك قبل أي حاجة ❤️</b><p>لو واجهتك أي مشكلة أو عندك شكوى أو اقتراح، ابعتلنا واحنا هنراجع رسالتك ونتواصل معاك في أسرع وقت. رأيك بيساعدنا نكون أفضل دايمًا.</p></div><label>نوع التواصل</label><select id="supType"><option>شكوى</option><option>استفسار</option><option>طلب مساعدة</option><option>مشكلة في الطلب</option><option>مشكلة في الحساب أو النقاط</option><option>اقتراح أو طلب آخر</option></select><label>الموضوع</label><input id="supSubj" maxlength="80" placeholder="عنوان مختصر"><label>رسالتك</label><textarea id="supFirst" rows="4" maxlength="2000"></textarea><label class="dc-att">📎 إرفاق صورة (اختياري)<input type="file" accept="image/*" hidden id="supNewImg"></label><div id="supNewPrev"></div><div class="err" id="supErr"></div><button class="btn" id="supGo" type="button" style="width:100%;margin-top:8px">إرسال</button></div>
+<div id="supNewF" hidden><div class="ak-welcome"><b>مساعد أبو كريم الذكي متاح داخل الدعم ❤️</b><p>اكتب سؤالك، وهيرد عليك تلقائيًا. ولو محتاج تدخل موظف من فريق الدعم، المحادثة هتتحول له.</p></div><div class="dc-intro"><b>إحنا في مطعم أبو كريم الحاتي يهمنا رضاك قبل أي حاجة ❤️</b><p>لو واجهتك أي مشكلة أو عندك شكوى أو اقتراح، ابعتلنا واحنا هنراجع رسالتك ونتواصل معاك في أسرع وقت. رأيك بيساعدنا نكون أفضل دايمًا.</p></div><label>نوع التواصل</label><select id="supType"><option>شكوى</option><option>استفسار</option><option>طلب مساعدة</option><option>مشكلة في الطلب</option><option>مشكلة في الحساب أو النقاط</option><option>اقتراح أو طلب آخر</option></select><label>الموضوع</label><input id="supSubj" maxlength="80" placeholder="عنوان مختصر"><label>رسالتك</label><textarea id="supFirst" rows="4" maxlength="2000"></textarea><label class="dc-att">📎 إرفاق صورة (اختياري)<input type="file" accept="image/*" hidden id="supNewImg"></label><div id="supNewPrev"></div><div class="err" id="supErr"></div><button class="btn" id="supGo" type="button" style="width:100%;margin-top:8px">إرسال</button></div>
 <div id="supTh" hidden><div class="sup-info" id="supInfo"></div><div id="supMsgs"></div><div class="sup-in"><button type="button" class="sup-home" aria-label="الرئيسية" onclick="closeS('sup');window.__supDismiss&&window.__supDismiss()">🏠</button><label class="sup-img">📷<input type="file" accept="image/*" hidden id="supImg"></label><textarea id="supTx" rows="1" maxlength="2000" placeholder="اكتب رسالتك…"></textarea><button class="btn" id="supSend" type="button">إرسال</button></div></div>
 </div></div>
 <div id="busy" aria-hidden="true"><i></i></div>
@@ -1854,7 +1854,7 @@ $('#supGo').onclick=async()=>{
  if(!t){$('#supErr').textContent='اكتب رسالتك أولاً';return}
  const b=$('#supGo');b.disabled=true;
  try{const{fs,db}=await F(),p=(window.AK&&AK.profile)||{};
-  const r=await fs.addDoc(fs.collection(db,'supportChats'),{uid:me.uid,name:p.name||me.displayName||me.email||'عميل',email:me.email||'',type:$('#supType').value,subject:s.slice(0,80),status:'open',num:'AK-'+String(Date.now()).slice(-6),lastMsg:t.slice(0,80),lastBy:'user',unreadAdmin:true,unreadUser:false,createdAt:fs.serverTimestamp(),updatedAt:fs.serverTimestamp()});
+  const r=await fs.addDoc(fs.collection(db,'supportChats'),{uid:me.uid,name:p.name||me.displayName||me.email||'عميل',email:me.email||'',type:$('#supType').value,subject:s.slice(0,80),status:'open',aiPaused:false,num:'AK-'+String(Date.now()).slice(-6),lastMsg:t.slice(0,80),lastBy:'user',unreadAdmin:true,unreadUser:false,createdAt:fs.serverTimestamp(),updatedAt:fs.serverTimestamp()});
   await fs.addDoc(fs.collection(db,'supportChats',r.id,'messages'),{by:'user',uid:me.uid,text:t,createdAt:fs.serverTimestamp(),...(newImg?{img:newImg}:{})});
   newImg='';$('#supNewPrev').innerHTML='';$('#supFirst').value='';$('#supSubj').value='';openTh(r.id)}
  catch(e){console.error(e);$('#supErr').textContent=e.code==='permission-denied'?'لم يتم تفعيل قواعد الدعم في Firestore بعد (راجع ملف firestore-support.rules.txt).':'تعذر الإرسال، حاول مرة أخرى.'}
@@ -1868,14 +1868,15 @@ async function openTh(id){
   if(s.docs.length&&!s.metadata.hasPendingWrites){fs.updateDoc(fs.doc(db,'supportChats',id),{[flag]:false}).catch(()=>{})}})}
 function info(){
  const c=cur||{},el=$('#supInfo');
- el.innerHTML=`<span>#${E(c.num)} • ${E(c.type)}${mode==='a'?' • '+E(c.name)+' '+E(c.email):''}</span>`+(mode==='a'?`<span><select id="supSt"><option value="open">مفتوحة</option><option value="review">قيد المراجعة</option><option value="replied">تم الرد</option><option value="solved">تم الحل</option></select> <button class="btn sm" id="supTog" type="button">${c.status==='solved'?'إعادة فتح':'إغلاق المحادثة'}</button></span>`:`<span class="sup-st ${E(c.status)}">${ST[c.status]||''}</span>`);
- if(mode==='a'){$('#supSt').value=c.status||'open';$('#supSt').onchange=e=>setSt(e.target.value);$('#supTog').onclick=()=>setSt(c.status==='solved'?'open':'solved')}}
+ el.innerHTML=`<span>#${E(c.num)} • ${E(c.type)}${mode==='a'?' • '+E(c.name)+' '+E(c.email):''}</span>`+(mode==='a'?`<span><select id="supSt"><option value="open">مفتوحة</option><option value="review">قيد المراجعة</option><option value="replied">تم الرد</option><option value="solved">تم الحل</option></select> <button class="btn sm" id="supTog" type="button">${c.status==='solved'?'إعادة فتح':'إغلاق المحادثة'}</button> <button class="btn sm" id="supAiToggle" type="button">${c.aiPaused?'تشغيل AI':'إيقاف AI'}</button></span>`:`<span class="sup-st ${E(c.status)}">${ST[c.status]||''}</span><span class="ak-ai-state">${c.aiPaused?'فريق الدعم استلم المحادثة':'أبو كريم AI متاح للرد'}</span>`);
+ if(mode==='a'){$('#supSt').value=c.status||'open';$('#supSt').onchange=e=>setSt(e.target.value);$('#supTog').onclick=()=>setSt(c.status==='solved'?'open':'solved');$('#supAiToggle').onclick=()=>toggleAi(!c.aiPaused)}}
 async function setSt(v){const{fs,db}=await F();try{await fs.updateDoc(fs.doc(db,'supportChats',cur.id),{status:v,updatedAt:fs.serverTimestamp()});cur.status=v;info()}catch(e){say('تعذر تغيير الحالة')}}
+async function toggleAi(paused){const{fs,db}=await F();try{await fs.updateDoc(fs.doc(db,'supportChats',cur.id),{aiPaused:paused,updatedAt:fs.serverTimestamp()});cur.aiPaused=paused;info();say(paused?'تم إيقاف الرد الآلي واستلام المحادثة':'تم تشغيل أبو كريم AI')}catch(e){say('تعذر تغيير حالة المساعد')}}
 async function send(text,img){
  if(!cur||(!text&&!img))return;const{fs,db}=await F(),a=mode==='a',m={by:a?'admin':'user',uid:me.uid,text:text||'',createdAt:fs.serverTimestamp()};if(img)m.img=img;
  try{if(a)pubStaff();await fs.addDoc(fs.collection(db,'supportChats',cur.id,'messages'),m);
   const u={lastMsg:(text||'📷 صورة').slice(0,80),lastBy:m.by,updatedAt:fs.serverTimestamp()};
-  if(a){u.unreadUser=true;u.unreadAdmin=false;if(cur.status==='open'||cur.status==='review')u.status='replied'}else{u.unreadAdmin=true;if(cur.status&&cur.status!=='open')u.status='open'}
+  if(a){u.unreadUser=true;u.unreadAdmin=false;u.aiPaused=true;if(cur.status==='open'||cur.status==='review')u.status='replied';cur.aiPaused=true}else{u.unreadAdmin=true;if(cur.status&&cur.status!=='open')u.status='open'}
   await fs.updateDoc(fs.doc(db,'supportChats',cur.id),u);if(u.status){cur.status=u.status;info()}}
  catch(e){console.error(e);say('تعذر إرسال الرسالة')}}
 $('#supSend').onclick=()=>{const t=$('#supTx').value.trim();if(t){$('#supTx').value='';send(t)}};
@@ -1888,11 +1889,12 @@ const hue=x=>{let h=0;for(const c of String(x||'a'))h=(h*31+c.charCodeAt(0))%360
 const okImg=p=>/^(data:image\/(jpeg|png|webp);base64,|https:\/\/)/.test(p||'');
 const av=w=>(!okImg(w.photo)&&w.role&&window.AK_LOGO)?`<img class="dc-av" src="${window.AK_LOGO}" alt="">`:okImg(w.photo)?`<img class="dc-av" src="${E(w.photo)}" alt="">`:`<span class="dc-av dc-def" style="--h:${hue(w.uid||w.name)}">${E((w.name||'؟').trim()[0]||'؟')}</span>`;
 function who(m){const p0=(window.AK&&AK.profile)||{};
+ if(m.by==='ai')return{uid:'abu-karim-ai',role:'ai',name:'أبو كريم AI',photo:''};
  if(m.by==='admin'){const u=m.uid,st=staff[u]||{},self=!!(me&&u===me.uid&&isAdm());
   return{uid:u,role:(st.owner||(self&&AK.isMain))?'owner':'admin',name:(self?(p0.name||me.displayName):st.name)||'فريق أبو كريم الحاتي',photo:self?(p0.photo||me.photoURL):st.photo}}
  const u=(cur&&cur.uid)||(mode==='u'&&me?me.uid:m.uid),p=prof[u]||{},self=!!(me&&u===me.uid);
  return{uid:u,role:'',name:p.name||(self&&(p0.name||me.displayName))||(cur&&cur.name)||'عميل',photo:p.photo||(self?(p0.photo||me.photoURL):''),since:p.createdAt}}
-const bd=r=>r==='owner'?'<b class="dc-bd owner">Owner</b>':r==='admin'?'<b class="dc-bd">Admin</b>':'';
+const bd=r=>r==='owner'?'<b class="dc-bd owner">Owner</b>':r==='admin'?'<b class="dc-bd">Admin</b>':r==='ai'?'<b class="dc-bd ai">مساعد ذكي</b>':'';
 const ft=t=>{if(!t)return'';const d=new Date(t),n=new Date(),tt=d.toLocaleTimeString('ar-EG',{hour:'numeric',minute:'2-digit'});return d.toDateString()===n.toDateString()?'اليوم '+tt:d.toLocaleDateString('ar-EG',{day:'numeric',month:'short'})+' '+tt};
 function paint(){
  const box=$('#supMsgs');if(!box||!cur)return;
@@ -1903,7 +1905,7 @@ function paint(){
   const fresh=shown.size>0&&!shown.has(m.id);shown.add(m.id);if(fresh&&m.by===mb)mineNew=true;
   const img=/^data:image\/jpeg;base64,/.test(m.img||'')?`<img src="${m.img}" alt="">`:'';
   let tk='';if(i===lastOwn)tk=m._p||!m.createdAt?'<div class="dc-tk">🕓 جارٍ الإرسال</div>':(read&&cur.lastBy===mb)?'<div class="dc-tk rd">✓✓ تمت القراءة</div>':'<div class="dc-tk">✓ تم الإرسال</div>';
-  h+=`<div class="dc-m ${m.by===mb?'me':''} ${m.by==='admin'?'adm':''} ${g?'g':''} ${fresh?'dc-in':''}"><div class="dc-col">${g?'':`<button class="dc-avb" data-i="${i}" aria-label="عرض البطاقة">${av(w)}</button>`}</div><div class="dc-body">${g?'':`<div class="dc-hd"><button class="dc-nm" data-i="${i}">${E(w.name)}</button>${bd(w.role)}<span class="dc-t">${ft(t)}</span></div>`}<div class="dc-tx">${img}${E(m.text)}</div>${tk}</div></div>`});
+  h+=`<div class="dc-m ${m.by===mb?'me':''} ${m.by==='admin'?'adm':''} ${m.by==='ai'?'ai':''} ${g?'g':''} ${fresh?'dc-in':''}"><div class="dc-col">${g?'':`<button class="dc-avb" data-i="${i}" aria-label="عرض البطاقة">${av(w)}</button>`}</div><div class="dc-body">${g?'':`<div class="dc-hd"><button class="dc-nm" data-i="${i}">${E(w.name)}</button>${bd(w.role)}<span class="dc-t">${ft(t)}</span></div>`}<div class="dc-tx">${img}${E(m.text)}</div>${tk}</div></div>`});
  box.innerHTML=h;if(near||mineNew||!box.dataset.n)box.scrollTop=box.scrollHeight;box.dataset.n=1}
 function stopIdent(){offP.forEach(f=>{try{f()}catch(e){}});offP=[];lastDocs=[];shown.clear();const b=$('#supMsgs');if(b){delete b.dataset.n;b.innerHTML=''}}
 async function watchIdent(){const{fs,db}=await F(),u=(cur&&cur.uid)||(mode==='u'&&me?me.uid:null);
@@ -1967,6 +1969,13 @@ html[data-theme=dark] .dc-intro{background:#2a1c19;border-color:#4a2c28;color:#f
 .dc-hd{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px}
 .dc-nm{font-weight:800;color:var(--tx)}.dc-m.adm .dc-nm{color:#c4162a}html[data-theme=dark] .dc-m.adm .dc-nm{color:#ff7b85}
 .dc-bd{font-size:.62rem;font-weight:800;border-radius:6px;padding:1px 7px;color:#fff;background:#c4162a}.dc-bd.owner{background:linear-gradient(135deg,#f0cd7a,#c8962e);color:#2a1a05}
+.dc-bd.ai{background:linear-gradient(135deg,#f0cd7a,#c8962e);color:#2a1a05}
+.dc-m.ai .dc-nm{color:#a7791e}
+.dc-m.ai .dc-tx{border-inline-start:3px solid #c8962e;background:#fff9e9}
+html[data-theme=dark] .dc-m.ai .dc-tx{background:#302719;border-color:#8d6a2b}
+.ak-ai-state{display:inline-block;margin-inline-start:8px;padding:3px 8px;border-radius:9px;background:#fff4d6;color:#805d19;font-size:.76rem}
+html[data-theme=dark] .ak-ai-state{background:#3a301e;color:#f0cd7a}
+
 .dc-t{font-size:.68rem;color:var(--mu)}
 .dc-tx{display:inline-block;max-width:min(100%,640px);padding:8px 13px;border-radius:4px 16px 16px 16px;background:#fff;border:1px solid #e4e4e8;color:#222;line-height:1.8;white-space:pre-wrap;word-break:break-word;font-size:clamp(.92rem,2.2vw,1.02rem)}
 .dc-m.me .dc-tx{background:#fdecee;border-color:#f3c3c8}.dc-m.adm .dc-tx{border-inline-start:3px solid #c4162a}
@@ -2273,6 +2282,7 @@ function boot(){if(booted||typeof D==='undefined'||!document.getElementById('nav
  let adm=false;setInterval(()=>{const u=window.AK&&AK.user,nid=u?u.uid:'guest';if(nid!==uid)switchUser(nid);if(window.AK&&AK.isAdmin&&!adm){adm=true;computeTop();setInterval(computeTop,3e5)}},1200)}
 const t0=setInterval(()=>{boot();if(booted)clearInterval(t0)},300);
 </script>
+
 
 </body>
 </html>
